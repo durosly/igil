@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { XIcon } from "lucide-react";
 
 function PublicLayout({ children }: { children: ReactNode }) {
 	return (
@@ -218,27 +219,43 @@ function PublicLayout({ children }: { children: ReactNode }) {
 					htmlFor="my-drawer-3"
 					aria-label="close sidebar"
 					className="drawer-overlay"></label>
-				<ul className="menu bg-base-200 min-h-full w-80 p-4">
-					{/* Sidebar content here */}
-					<li>
-						<a>Services</a>
-					</li>
-					<li>
-						<a>Industries</a>
-					</li>
-					<li>
-						<a>Work</a>
-					</li>
-					<li>
-						<a>Locations</a>
-					</li>
-					<li>
-						<a>Igil Advantage</a>
-					</li>
-					<li>
-						<a>Careers</a>
-					</li>
-				</ul>
+				<div className="bg-base-200 min-h-full w-80 p-4">
+					<label
+						htmlFor="my-drawer-3"
+						aria-label="close sidebar"
+						className="btn btn-sm btn-square btn-ghost absolute top-2 right-2">
+						<XIcon className="size-5" />
+					</label>
+					<div className="relative size-10 mx-auto">
+						<Image
+							src="/images/logo.png"
+							fill
+							alt="IDAN"
+							className="object-contain"
+						/>
+					</div>
+					<ul className="menu ">
+						{/* Sidebar content here */}
+						<li>
+							<a>Services</a>
+						</li>
+						<li>
+							<a>Industries</a>
+						</li>
+						<li>
+							<a>Work</a>
+						</li>
+						<li>
+							<a>Locations</a>
+						</li>
+						<li>
+							<a>Igil Advantage</a>
+						</li>
+						<li>
+							<a>Careers</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	);
