@@ -22,7 +22,7 @@ const HeroSlider = () => {
 			videoSrc: "https://www.coffman.com/videos/2021-home-page.mp4",
 			mobileImage:
 				"/wp-content/uploads/2020/01/Generic-Orange-Engineer-hard-hat-seattle-coffman-engineers-mobile-home-page-2-e1580415005346.jpg",
-			title: "The Coffman advantage",
+			title: "The IDAN advantage",
 			text: "Local relationships backed by an expansive portfolio of services custom scaled to you.",
 			button: { label: "About Us", link: "/coffman-advantage/" },
 		},
@@ -43,7 +43,7 @@ const HeroSlider = () => {
 	];
 
 	return (
-		<section className="hero-slider-section relative bg-red-500">
+		<section className="hero-slider-section relative bg-primary">
 			<Slider {...slideSettings}>
 				{slides.map((slide, index) => (
 					<div key={index} className="hero-slide relative">
