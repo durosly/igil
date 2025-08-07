@@ -1,7 +1,60 @@
 import React from "react";
 import { CheckCircle, MapPin, Calendar, Building2, Award, Users, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+	title: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+	description:
+		"Explore IDAN's portfolio of successful NDT projects including Dangote Cement Factory, maritime vessel inspections, pipeline integrity assessments, and industrial equipment testing. See our track record of 10+ completed projects across various industries.",
+	keywords: [
+		"NDT projects portfolio",
+		"completed projects",
+		"Dangote Cement Factory",
+		"maritime vessel inspection",
+		"pipeline integrity assessment",
+		"pressure vessel inspection",
+		"structural integrity assessment",
+		"ultrasonic testing projects",
+		"magnetic particle inspection",
+		"weld inspection projects",
+		"industrial equipment testing",
+		"quality control testing",
+		"NDT case studies",
+		"project portfolio Nigeria",
+		"successful NDT projects",
+		"industrial inspection projects",
+		"oil and gas projects",
+		"manufacturing inspection",
+	],
+	openGraph: {
+		title: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"Explore IDAN's portfolio of successful NDT projects including Dangote Cement Factory, maritime vessel inspections, pipeline integrity assessments, and industrial equipment testing. See our track record of 10+ completed projects across various industries.",
+		url: "https://igil.net/work",
+		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		images: [
+			{
+				url: "/images/cover.png",
+				width: 1200,
+				height: 630,
+				alt: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"Explore IDAN's portfolio of successful NDT projects including Dangote Cement Factory, maritime vessel inspections, pipeline integrity assessments, and industrial equipment testing. See our track record of 10+ completed projects across various industries.",
+		images: ["/images/cover.png"],
+	},
+	alternates: {
+		canonical: "https://igil.net/work",
+	},
+};
 interface JobCard {
 	id: number;
 	title: string;
@@ -102,9 +155,9 @@ const ongoingJobs: JobCard[] = [
 
 function WorkPage() {
 	return (
-		<div className="min-h-screen bg-gray-50">
+		<main className="min-h-screen bg-gray-50">
 			{/* Hero Section */}
-			<div className="bg-white">
+			<section className="bg-white">
 				<div className="container mx-auto px-4 py-16">
 					<div className="text-center max-w-4xl mx-auto">
 						<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -117,38 +170,38 @@ function WorkPage() {
 						</p>
 					</div>
 				</div>
-			</div>
+			</section>
 
 			{/* Stats Section */}
-			<div className="bg-primary text-white py-12">
+			<section className="bg-primary text-white py-12">
 				<div className="container mx-auto px-4">
 					<div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-						<div className="flex flex-col items-center">
+						<article className="flex flex-col items-center">
 							<Award className="w-8 h-8 mb-2" />
 							<div className="text-3xl font-bold">10+</div>
 							<div className="text-sm opacity-90">Completed Projects</div>
-						</div>
-						<div className="flex flex-col items-center">
+						</article>
+						<article className="flex flex-col items-center">
 							<Users className="w-8 h-8 mb-2" />
 							<div className="text-3xl font-bold">25+</div>
 							<div className="text-sm opacity-90">Happy Clients</div>
-						</div>
-						<div className="flex flex-col items-center">
+						</article>
+						<article className="flex flex-col items-center">
 							<Building2 className="w-8 h-8 mb-2" />
 							<div className="text-3xl font-bold">10+</div>
 							<div className="text-sm opacity-90">Industries Served</div>
-						</div>
-						<div className="flex flex-col items-center">
+						</article>
+						<article className="flex flex-col items-center">
 							<TrendingUp className="w-8 h-8 mb-2" />
 							<div className="text-3xl font-bold">8+</div>
 							<div className="text-sm opacity-90">Years Experience</div>
-						</div>
+						</article>
 					</div>
 				</div>
-			</div>
+			</section>
 
 			{/* Completed Jobs Section */}
-			<div className="container mx-auto px-4 py-16">
+			<section className="container mx-auto px-4 py-16">
 				<div className="text-center mb-12">
 					<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
 						Completed Projects
@@ -161,7 +214,11 @@ function WorkPage() {
 
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 					{completedJobs.map((job) => (
-						<div key={job.id} className="bg-white border border-gray-100">
+						<article
+							key={job.id}
+							itemScope
+							itemType="https://schema.org/Project"
+							className="bg-white border border-gray-100">
 							<div className="p-6">
 								<div className="flex max-md:flex-col max-md:gap-2 md:items-start md:justify-between mb-4">
 									<div className="flex max-sm:flex-col max-sm:gap-2 md:items-center">
@@ -169,12 +226,16 @@ function WorkPage() {
 											{job.id}
 										</div>
 										<div>
-											<h3 className="sm:text-xl font-semibold text-gray-900">
+											<h3
+												itemProp="name"
+												className="sm:text-xl font-semibold text-gray-900">
 												{job.title}
 											</h3>
 											<div className="flex items-center text-sm text-gray-600 mt-1">
 												<MapPin className="w-4 h-4 mr-1" />
-												{job.location}
+												<span itemProp="location">
+													{job.location}
+												</span>
 											</div>
 										</div>
 									</div>
@@ -186,7 +247,9 @@ function WorkPage() {
 									</div>
 								</div>
 
-								<p className="text-gray-700 mb-4 leading-relaxed">
+								<p
+									itemProp="description"
+									className="text-gray-700 mb-4 leading-relaxed">
 									{job.description}
 								</p>
 
@@ -196,7 +259,9 @@ function WorkPage() {
 										<span className="font-medium">
 											Client:
 										</span>
-										<span className="ml-1">
+										<span
+											itemProp="sponsor"
+											className="ml-1">
 											{job.client}
 										</span>
 									</div>
@@ -206,13 +271,18 @@ function WorkPage() {
 										<span className="font-medium">
 											Year:
 										</span>
-										<span className="ml-1">{job.year}</span>
+										<span
+											itemProp="startDate"
+											className="ml-1">
+											{job.year}
+										</span>
 									</div>
 
 									<div className="flex flex-wrap gap-2 mt-3">
 										{job.services.map((service, index) => (
 											<span
 												key={index}
+												itemProp="keywords"
 												className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
 												{service}
 											</span>
@@ -220,10 +290,10 @@ function WorkPage() {
 									</div>
 								</div>
 							</div>
-						</div>
+						</article>
 					))}
 				</div>
-			</div>
+			</section>
 
 			{/* Ongoing Projects Section */}
 			<div className="bg-white py-16 hidden">
@@ -316,7 +386,7 @@ function WorkPage() {
 			</div>
 
 			{/* Call to Action */}
-			<div className="bg-gray-100 py-16">
+			<section className="bg-gray-100 py-16">
 				<div className="container mx-auto px-4">
 					<div className="text-center max-w-3xl mx-auto">
 						<h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -337,8 +407,8 @@ function WorkPage() {
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</section>
+		</main>
 	);
 }
 

@@ -12,6 +12,52 @@ import {
 	TrendingUp,
 	Users,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "About Us",
+	description:
+		"Learn about IDAN GLOBAL INSPECTION LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010. ISO 9712 and ASNT Level II certified professionals with 8+ years of experience in industrial safety and quality assurance.",
+	keywords: [
+		"About IDAN GLOBAL INSPECTION LIMITED",
+		"IGIL company",
+		"NDT company Nigeria",
+		"Industrial inspection company",
+		"ISO 9712 certified company",
+		"ASNT Level II certified",
+		"Non-Destructive Testing company",
+		"Quality assurance company",
+		"Industrial safety services",
+		"IDOGHOR ANTHONY URUEMU",
+	],
+	openGraph: {
+		title: "About Us - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"Learn about IDAN GLOBAL INSPECTION LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010. ISO 9712 and ASNT Level II certified professionals.",
+		url: "https://igil.net/about-us",
+		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		images: [
+			{
+				url: "/images/cover.png",
+				width: 1200,
+				height: 630,
+				alt: "About IDAN GLOBAL INSPECTION LIMITED",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "About Us - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"Learn about IDAN GLOBAL INSPECTION LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010.",
+		images: ["/images/cover.png"],
+	},
+	alternates: {
+		canonical: "https://igil.net/about-us",
+	},
+};
 
 function AboutUsPage() {
 	return (

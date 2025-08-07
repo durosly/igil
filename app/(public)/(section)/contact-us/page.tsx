@@ -1,5 +1,51 @@
 import ContactUsForm from "@/app/components/contact-us";
 import { Building2, Clock, Globe, Mail, MessageCircle, Phone, Send } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Contact Us",
+	description:
+		"Contact IDAN GLOBAL INSPECTION LIMITED (IGIL) for professional NDT services in Nigeria. Get in touch with our ISO 9712 and ASNT Level II certified experts for all your inspection and testing needs.",
+	keywords: [
+		"Contact IDAN GLOBAL INSPECTION LIMITED",
+		"NDT services contact",
+		"Industrial inspection contact",
+		"Non-Destructive Testing contact",
+		"Quality assurance contact",
+		"ISO 9712 certified contact",
+		"ASNT Level II contact",
+		"Nigeria NDT services",
+		"Industrial safety contact",
+		"info@igil.net",
+		"+234 903 484 0287",
+	],
+	openGraph: {
+		title: "Contact Us - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"Contact IDAN GLOBAL INSPECTION LIMITED (IGIL) for professional NDT services in Nigeria. ISO 9712 and ASNT Level II certified experts.",
+		url: "https://igil.net/contact-us",
+		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		images: [
+			{
+				url: "/images/cover.png",
+				width: 1200,
+				height: 630,
+				alt: "Contact IDAN GLOBAL INSPECTION LIMITED",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Contact Us - IDAN GLOBAL INSPECTION LIMITED",
+		description: "Contact IDAN GLOBAL INSPECTION LIMITED (IGIL) for professional NDT services in Nigeria.",
+		images: ["/images/cover.png"],
+	},
+	alternates: {
+		canonical: "https://igil.net/contact-us",
+	},
+};
 
 function ContactUsPage() {
 	return (

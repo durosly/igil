@@ -16,6 +16,52 @@ import Image from "next/image";
 import ContactUsForm from "../components/contact-us";
 import HeroSlider from "../components/hero-slider";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Home",
+	description:
+		"IDAN GLOBAL INSPECTION LIMITED (IGIL) - Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries.",
+	keywords: [
+		"NDT services Nigeria",
+		"Non-Destructive Testing",
+		"Industrial inspection",
+		"Quality assurance",
+		"Safety testing",
+		"ISO 9712 certified",
+		"ASNT Level II",
+		"Ultrasonic Testing",
+		"Magnetic Particle Inspection",
+		"Radiographic Testing",
+	],
+	openGraph: {
+		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		description:
+			"Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals.",
+		url: "https://igil.net",
+		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		images: [
+			{
+				url: "/images/logo.png",
+				width: 1200,
+				height: 630,
+				alt: "IDAN GLOBAL INSPECTION LIMITED - NDT Services",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		description:
+			"Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria.",
+		images: ["/images/logo.png"],
+	},
+	alternates: {
+		canonical: "https://igil.net",
+	},
+};
 
 const services = [
 	{
@@ -115,7 +161,7 @@ const values = [
 
 export default function Home() {
 	return (
-		<div className="min-h-screen">
+		<main className="min-h-screen">
 			<HeroSlider />
 
 			{/* Home Section */}
@@ -669,13 +715,17 @@ export default function Home() {
 			</section>
 
 			{/* Services Section */}
-			<section id="services" className="py-20">
+			<section id="services" className="py-20" itemScope itemType="https://schema.org/Service">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="text-center mb-16">
-						<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+						<h2
+							className="text-3xl md:text-4xl font-bold text-gray-900 mb-6"
+							itemProp="name">
 							NDT Services
 						</h2>
-						<p className="text-lg text-gray-700 max-w-3xl mx-auto">
+						<p
+							className="text-lg text-gray-700 max-w-3xl mx-auto"
+							itemProp="description">
 							Comprehensive non-destructive testing solutions to ensure the
 							integrity and quality of your materials and structures.
 						</p>
@@ -683,7 +733,11 @@ export default function Home() {
 
 					<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 						{services.map((service, index) => (
-							<div className="bg-base-300" key={index}>
+							<article
+								className="bg-base-300"
+								key={index}
+								itemScope
+								itemType="https://schema.org/Service">
 								<div className="relative w-full h-40">
 									<Image
 										src={service.cover}
@@ -691,15 +745,18 @@ export default function Home() {
 										fill
 										className="object-cover"
 										sizes={service.sizes}
+										itemProp="image"
 									/>
 								</div>
 								<div className="p-5">
-									<h3 className="text-xl font-bold">
+									<h3
+										className="text-xl font-bold"
+										itemProp="name">
 										{service.title}
 									</h3>
-									<p>{service.desc}</p>
+									<p itemProp="description">{service.desc}</p>
 								</div>
-							</div>
+							</article>
 						))}
 					</div>
 				</div>
@@ -859,6 +916,6 @@ export default function Home() {
 
 			{/* Contact Section */}
 			<ContactUsForm />
-		</div>
+		</main>
 	);
 }

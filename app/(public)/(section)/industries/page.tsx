@@ -1,5 +1,58 @@
 import React from "react";
 import { Building2, Store, GraduationCap, Zap, Shield, Stethoscope, Hotel, Cog, Fuel, Microscope } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+	description:
+		"IDAN serves diverse industries including Oil & Gas, Industrial, Healthcare, Education, Energy & Utility, Federal Government, Hospitality, Commercial & Retail, Civic & Local Government, and Science & Technology sectors with comprehensive NDT services.",
+	keywords: [
+		"oil and gas industry",
+		"industrial inspection",
+		"healthcare facilities",
+		"educational institutions",
+		"energy and utility",
+		"federal government",
+		"hospitality sector",
+		"commercial retail",
+		"civic government",
+		"science technology",
+		"petrochemical industry",
+		"refinery services",
+		"industrial engineering",
+		"multidiscipline solutions",
+		"infrastructure inspection",
+		"NDT services by industry",
+		"industrial solutions Nigeria",
+	],
+	openGraph: {
+		title: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"IDAN operates across diverse sectors including Oil & Gas, Industrial, Healthcare, Education, Energy & Utility, Federal Government, Hospitality, Commercial & Retail, Civic & Local Government, and Science & Technology with innovative solutions and exceptional results.",
+		url: "https://igil.net/industries",
+		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		images: [
+			{
+				url: "/images/cover.png",
+				width: 1200,
+				height: 630,
+				alt: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"IDAN operates across diverse sectors including Oil & Gas, Industrial, Healthcare, Education, Energy & Utility, Federal Government, Hospitality, Commercial & Retail, Civic & Local Government, and Science & Technology with innovative solutions and exceptional results.",
+		images: ["/images/cover.png"],
+	},
+	alternates: {
+		canonical: "https://igil.net/industries",
+	},
+};
 
 interface IndustryCard {
 	id: string;
@@ -94,9 +147,9 @@ const industries: IndustryCard[] = [
 
 function IndustriesPage() {
 	return (
-		<div className="min-h-screen bg-gray-50">
+		<main className="min-h-screen bg-gray-50">
 			{/* Hero Section */}
-			<div className="bg-white">
+			<section className="bg-white">
 				<div className="container mx-auto px-4 py-16">
 					<div className="text-center max-w-4xl mx-auto">
 						<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -109,34 +162,39 @@ function IndustriesPage() {
 						</p>
 					</div>
 				</div>
-			</div>
+			</section>
 
 			{/* Industries Grid */}
-			<div className="container mx-auto px-4 py-16">
+			<section className="container mx-auto px-4 py-16">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
 					{industries.map((industry) => (
-						<div
+						<article
 							key={industry.id}
+							itemScope
+							itemType="https://schema.org/Service"
 							className="bg-white rounded-lg p-6 hover:bg-gray-50 transition-colors duration-200 border border-gray-100">
 							<div className="flex flex-col items-center text-center h-full">
 								<div className={`mb-4 ${industry.color}`}>
 									{industry.icon}
 								</div>
 								<h3
+									itemProp="name"
 									className={`font-bold text-sm mb-3 ${industry.color}`}>
 									{industry.title}
 								</h3>
-								<p className="text-gray-600 text-xs leading-relaxed">
+								<p
+									itemProp="description"
+									className="text-gray-600 text-xs leading-relaxed">
 									{industry.description}
 								</p>
 							</div>
-						</div>
+						</article>
 					))}
 				</div>
-			</div>
+			</section>
 
 			{/* Call to Action */}
-			<div className="bg-white border-t border-gray-100">
+			<section className="bg-white border-t border-gray-100">
 				<div className="container mx-auto px-4 py-16">
 					<div className="text-center max-w-3xl mx-auto">
 						<h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -149,8 +207,8 @@ function IndustriesPage() {
 						<button className="btn btn-primary btn-lg">Get Started Today</button>
 					</div>
 				</div>
-			</div>
-		</div>
+			</section>
+		</main>
 	);
 }
 

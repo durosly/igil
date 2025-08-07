@@ -1,5 +1,59 @@
 import { Award, Clock, Globe, Mail, MapPin, Phone, Users } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+	title: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+	description:
+		"IDAN provides comprehensive NDT services across all 36 states of Nigeria. From Lagos to Abuja, Port Harcourt to Kano, we offer nationwide coverage with local expertise, rapid response, and consistent quality standards.",
+	keywords: [
+		"NDT services Nigeria",
+		"nationwide coverage",
+		"Lagos NDT services",
+		"Abuja inspection services",
+		"Port Harcourt NDT",
+		"Kano industrial inspection",
+		"South-West Nigeria",
+		"South-South Nigeria",
+		"North-Central Nigeria",
+		"South-East Nigeria",
+		"North-East Nigeria",
+		"North-West Nigeria",
+		"oil and gas inspection Nigeria",
+		"industrial inspection nationwide",
+		"NDT technicians Nigeria",
+		"emergency response NDT",
+		"local expertise Nigeria",
+		"rapid response inspection",
+	],
+	openGraph: {
+		title: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"IDAN provides comprehensive NDT services across all 36 states of Nigeria. From the bustling ports of Lagos to the industrial heartlands of the Niger Delta, from the political capital of Abuja to the emerging cities of the North, we ensure quality and safety wherever you operate.",
+		url: "https://igil.net/locations",
+		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		images: [
+			{
+				url: "/images/cover.png",
+				width: 1200,
+				height: 630,
+				alt: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+		description:
+			"IDAN provides comprehensive NDT services across all 36 states of Nigeria. From the bustling ports of Lagos to the industrial heartlands of the Niger Delta, from the political capital of Abuja to the emerging cities of the North, we ensure quality and safety wherever you operate.",
+		images: ["/images/cover.png"],
+	},
+	alternates: {
+		canonical: "https://igil.net/locations",
+	},
+};
 
 // Major Nigerian cities and regions where IDAN operates
 const locations = [
@@ -44,7 +98,7 @@ const stats = [
 
 function LocationsPage() {
 	return (
-		<div className="min-h-screen bg-base-200">
+		<main className="min-h-screen bg-base-200">
 			{/* Hero Section */}
 			<section className="relative py-20">
 				<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -60,19 +114,23 @@ function LocationsPage() {
 						{stats.map((stat, index) => {
 							const IconComponent = stat.icon;
 							return (
-								<div
+								<article
 									key={index}
+									itemScope
+									itemType="https://schema.org/Organization"
 									className="bg-white p-6 border border-base-300">
 									<div className="flex flex-col items-center">
 										<IconComponent className="w-8 h-8 text-primary mb-2" />
-										<div className="text-3xl font-bold">
+										<div
+											itemProp="numberOfEmployees"
+											className="text-3xl font-bold">
 											{stat.value}
 										</div>
 										<div className="text-sm text-gray-800 text-center">
 											{stat.label}
 										</div>
 									</div>
-								</div>
+								</article>
 							);
 						})}
 					</div>
@@ -97,30 +155,35 @@ function LocationsPage() {
 				{/* Regional Coverage Grid */}
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
 					{locations.map((location, index) => (
-						<div
+						<article
 							key={index}
+							itemScope
+							itemType="https://schema.org/Place"
 							className="bg-base-100 p-6 border border-base-300 hover:shadow-md transition-all duration-300">
 							<div className="flex items-center mb-4">
 								<div className="w-12 h-12 bg-primary/20 flex items-center justify-center mr-4">
 									<MapPin className="w-6 h-6 text-primary" />
 								</div>
-								<h3 className="text-xl font-bold text-base-content">
+								<h3
+									itemProp="name"
+									className="text-xl font-bold text-base-content">
 									{location.region}
 								</h3>
 							</div>
-							<p className="text-base-content/70 mb-4">
+							<p itemProp="description" className="text-base-content/70 mb-4">
 								{location.description}
 							</p>
 							<div className="flex flex-wrap gap-2">
 								{location.cities.map((city, cityIndex) => (
 									<span
 										key={cityIndex}
+										itemProp="addressLocality"
 										className="px-3 py-1 bg-primary/10 text-primary text-sm">
 										{city}
 									</span>
 								))}
 							</div>
-						</div>
+						</article>
 					))}
 				</div>
 
@@ -252,7 +315,7 @@ function LocationsPage() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }
 
