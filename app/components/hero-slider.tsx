@@ -11,7 +11,7 @@ const HeroSlider = () => {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 		autoplay: true,
-		autoplaySpeed: 10000,
+		autoplaySpeed: 500,
 		arrows: false,
 		className: "hero-slider",
 	};
@@ -19,26 +19,24 @@ const HeroSlider = () => {
 	const slides = [
 		{
 			type: "video",
-			videoSrc: "https://www.coffman.com/videos/2021-home-page.mp4",
-			mobileImage:
-				"/wp-content/uploads/2020/01/Generic-Orange-Engineer-hard-hat-seattle-coffman-engineers-mobile-home-page-2-e1580415005346.jpg",
+			videoSrc: "https://videos.pexels.com/video-files/4468789/4468789-uhd_2560_1440_24fps.mp4",
 			title: "The IDAN advantage",
 			text: "Local relationships backed by an expansive portfolio of services custom scaled to you.",
-			button: { label: "About Us", link: "/coffman-advantage/" },
+			button: { label: "About Us", link: "/about-us" },
 		},
 		{
 			type: "image",
 			bg: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5",
 			title: "Our Culture",
 			text: "Entrepreneurs at heart, we move nimbly to untangle challenges, find efficiencies, and take smart risks.",
-			button: { label: "How We Work", link: "/coffman-advantage/" },
+			button: { label: "How We Work", link: "/about-us" },
 		},
 		{
 			type: "image",
 			bg: "https://images.unsplash.com/photo-1498631906572-66c58d46ecf7",
 			title: "Our People",
 			text: "We’re seasoned pros who are also personable and down to earth. We don’t overcomplicate.",
-			button: { label: "Join Us", link: "/careers/" },
+			button: { label: "Join Us", link: "/contact-us" },
 		},
 	];
 
@@ -58,12 +56,6 @@ const HeroSlider = () => {
 									playsInline>
 									<source src={slide.videoSrc} type="video/mp4" />
 								</video>
-								<figure
-									className="mobile-image"
-									style={{
-										backgroundImage: `url(${slide.mobileImage})`,
-									}}
-								/>
 							</div>
 						) : (
 							<div
