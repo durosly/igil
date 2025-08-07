@@ -40,6 +40,12 @@ function getPathInfo(path: string): PathInfo {
 			linkInfo: "Locations",
 			desc: "Nationwide availability",
 		};
+	} else if (path === "/contact-us") {
+		return {
+			title: "Connect With Us",
+			linkInfo: "Contact US",
+			desc: "We can't wait to here from you",
+		};
 	}
 
 	return {
