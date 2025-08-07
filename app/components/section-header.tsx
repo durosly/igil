@@ -22,6 +22,12 @@ function getPathInfo(path: string): PathInfo {
 			linkInfo: "About Us",
 			desc: "Discover our story, mission, and the team behind our success",
 		};
+	} else if (path === "/industries") {
+		return {
+			title: "Our Industries",
+			linkInfo: "Industries",
+			desc: "Areas you can find us",
+		};
 	}
 
 	return {
