@@ -218,6 +218,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 							fill
 							alt="IDAN"
 							className="object-contain"
+							sizes="30px"
 						/>
 					</div>
 					<ul className="menu ">

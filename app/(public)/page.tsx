@@ -18,18 +18,54 @@ import HeroSlider from "../components/hero-slider";
 import Link from "next/link";
 
 const services = [
-	{ title: "UT", desc: "Ultrasonic Testing", cover: "/images/ut.png" },
-	{ title: "MPI", desc: "Magnetic Particle Inspection", cover: "/images/mpi.png" },
-	{ title: "DPI", desc: "Dye Penetrant Inspection", cover: "/images/dpt.png" },
+	{
+		title: "UT",
+		desc: "Ultrasonic Testing",
+		cover: "/images/ut.png",
+		sizes: "(min-width: 1400px) 286px, (min-width: 1040px) calc(13.53vw + 99px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
+	{
+		title: "MPI",
+		desc: "Magnetic Particle Inspection",
+		cover: "/images/mpi.png",
+		sizes: "(min-width: 1400px) 286px, (min-width: 1040px) calc(13.53vw + 99px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
+	{
+		title: "DPI",
+		desc: "Dye Penetrant Inspection",
+		cover: "/images/dpt.png",
+		sizes: "(min-width: 1400px) 286px, (min-width: 1040px) calc(13.53vw + 99px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
 	{
 		title: "RT/RFI",
 		desc: "Radiographic Testing and Radiographic Film Interpretation",
 		cover: "/images/rtfi.png",
+		sizes: "(min-width: 1040px) 277px, (min-width: 780px) calc(50vw - 36px), 93.48vw",
 	},
-	{ title: "VT/VE", desc: "Visual Testing or Examination", cover: "/images/vt.png" },
-	{ title: "PMI", desc: "Positive Material Identification", cover: "/images/pmi.png" },
-	{ title: "Hardness Testing", desc: "Material hardness verification", cover: "/images/mhv.png" },
-	{ title: "Sales of NDT Equipment", desc: "Professional NDT equipment sales", cover: "/images/sales.jpeg" },
+	{
+		title: "VT/VE",
+		desc: "Visual Testing or Examination",
+		cover: "/images/vt.png",
+		sizes: "(min-width: 1400px) 286px, (min-width: 1040px) calc(12.94vw + 107px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
+	{
+		title: "PMI",
+		desc: "Positive Material Identification",
+		cover: "/images/pmi.png",
+		sizes: "(min-width: 1400px) 286px, (min-width: 1040px) calc(13.24vw + 103px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
+	{
+		title: "Hardness Testing",
+		desc: "Material hardness verification",
+		cover: "/images/mhv.png",
+		sizes: "(min-width: 1380px) 286px, (min-width: 1040px) calc(15.31vw + 78px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
+	{
+		title: "Sales of NDT Equipment",
+		desc: "Professional NDT equipment sales",
+		cover: "/images/sales.jpeg",
+		sizes: "(min-width: 1360px) 286px, (min-width: 1040px) calc(20vw + 18px), (min-width: 780px) calc(50vw - 36px), calc(96.52vw - 22px)",
+	},
 ];
 
 const values = [
@@ -267,6 +303,7 @@ export default function Home() {
 											alt=""
 											fill
 											className="object-cover"
+											sizes="(min-width: 1360px) 568px, (min-width: 1040px) calc(40vw + 32px), (min-width: 540px) calc(96.67vw - 30px), calc(12.27vw + 408px)"
 										/>
 										<div className="absolute inset-0 bg-gradient-to-br from-black/90 to-gray-700/20 flex items-center justify-center">
 											<div className="text-center text-white">
@@ -292,6 +329,7 @@ export default function Home() {
 											alt=""
 											fill
 											className="object-cover"
+											sizes="202px"
 										/>
 									</div>
 								</div>
@@ -476,6 +514,7 @@ export default function Home() {
 								alt=""
 								fill
 								className="object-cover"
+								sizes="(min-width: 1720px) 1219px, (min-width: 1040px) calc(-11.21vw + 1408px), (min-width: 660px) calc(100vw - 48px), 562px"
 							/>
 						</div>
 						<div>
@@ -622,6 +661,7 @@ export default function Home() {
 								alt=""
 								fill
 								className="object-cover"
+								sizes="(min-width: 1360px) 568px, (min-width: 780px) 43.21vw, calc(96.09vw - 34px)"
 							/>
 						</div>
 					</div>
@@ -650,6 +690,7 @@ export default function Home() {
 										alt={service.title}
 										fill
 										className="object-cover"
+										sizes={service.sizes}
 									/>
 								</div>
 								<div className="p-5">
@@ -716,6 +757,7 @@ export default function Home() {
 										fill
 										alt="ISO 9712 certificate"
 										className="object-contain"
+										sizes="64px"
 									/>
 								</div>
 								<h3 className="text-2xl font-semibold mb-3">
@@ -734,6 +776,7 @@ export default function Home() {
 										fill
 										alt="ASNT LEVEL II certificate"
 										className="object-contain"
+										sizes="63px"
 									/>
 								</div>
 								<h3 className="text-2xl font-semibold mb-3">
