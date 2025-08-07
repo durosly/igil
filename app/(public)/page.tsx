@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import ContactUsForm from "../components/contact-us";
 import HeroSlider from "../components/hero-slider";
+import Link from "next/link";
 
 const services = [
 	{ title: "UT", desc: "Ultrasonic Testing", cover: "/images/ut.png" },
@@ -108,7 +109,9 @@ export default function Home() {
 							reliability, and a personal touch.
 						</p>
 					</div>
-					<button className="btn btn-primary">Get in Touch</button>
+					<Link href="/contact-us" className="btn btn-primary">
+						Get in Touch
+					</Link>
 				</div>
 			</section>
 
