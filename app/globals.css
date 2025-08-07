@@ -188,3 +188,42 @@ body {
 	clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%);
 	background-color: var(--color-primary);
 }
+
+/* Custom video player slider styles */
+.slider {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 4px;
+	border-radius: 2px;
+	outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #ffffff;
+	cursor: pointer;
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #ffffff;
+	cursor: pointer;
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider:hover::-webkit-slider-thumb {
+	background: #f0f0f0;
+}
+
+.slider:hover::-moz-range-thumb {
+	background: #f0f0f0;
+}

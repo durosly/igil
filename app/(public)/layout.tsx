@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { XIcon } from "lucide-react";
+import Link from "next/link";
 
 function PublicLayout({ children }: { children: ReactNode }) {
 	return (
@@ -36,11 +37,11 @@ function PublicLayout({ children }: { children: ReactNode }) {
 
 							{/* Desktop Navigation */}
 							<nav className="hidden lg:flex items-center space-x-8">
-								<a
-									href="#"
+								<Link
+									href="/services"
 									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
 									Services
-								</a>
+								</Link>
 								<a
 									href="#"
 									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
@@ -237,7 +238,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 					<ul className="menu ">
 						{/* Sidebar content here */}
 						<li>
-							<a>Services</a>
+							<Link href={"/services"}>Services</Link>
 						</li>
 						<li>
 							<a>Industries</a>
