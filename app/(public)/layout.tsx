@@ -136,24 +136,39 @@ function PublicLayout({ children }: { children: ReactNode }) {
 								</h3>
 								<ul className="space-y-2">
 									<li>
-										<button className="footer-link">
+										<Link
+											href="/services"
+											className="footer-link">
 											Services
-										</button>
+										</Link>
 									</li>
 									<li>
-										<button className="footer-link">
-											About NDT
-										</button>
+										<Link
+											href="/about-us"
+											className="footer-link">
+											About US
+										</Link>
 									</li>
 									<li>
-										<button className="footer-link">
-											Certifications
-										</button>
+										<Link
+											href="/industries"
+											className="footer-link">
+											Industries
+										</Link>
 									</li>
 									<li>
-										<button className="footer-link">
+										<Link
+											href="/locations"
+											className="footer-link">
+											Locations
+										</Link>
+									</li>
+									<li>
+										<Link
+											href="/work"
+											className="footer-link">
 											Completed Jobs
-										</button>
+										</Link>
 									</li>
 								</ul>
 							</div>
