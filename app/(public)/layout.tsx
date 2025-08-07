@@ -57,22 +57,19 @@ function PublicLayout({ children }: { children: ReactNode }) {
 									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
 									Locations
 								</Link>
-								<a
-									href="#"
+								<Link
+									href="/about-us"
 									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
 									Igil Advantage
-								</a>
-								<a
-									href="#"
-									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
-									Careers
-								</a>
+								</Link>
 							</nav>
 
 							{/* Right Icons */}
 							<div className="flex items-center space-x-4">
 								{/* Contact Icon */}
-								<button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
+								<Link
+									href={"/contact-us"}
+									className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
 									<svg
 										className="w-5 h-5"
 										fill="none"
@@ -85,22 +82,8 @@ function PublicLayout({ children }: { children: ReactNode }) {
 											d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
 										/>
 									</svg>
-								</button>
-								{/* Search Icon */}
-								<button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-									<svg
-										className="w-5 h-5"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24">
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-										/>
-									</svg>
-								</button>
+								</Link>
+
 								{/* Mobile Menu Button */}
 								<div className="lg:hidden">
 									<label
@@ -250,10 +233,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 							<Link href="/locations">Locations</Link>
 						</li>
 						<li>
-							<a>Igil Advantage</a>
-						</li>
-						<li>
-							<a>Careers</a>
+							<Link href="/about-us"> Igil Advantage</Link>
 						</li>
 					</ul>
 				</div>
