@@ -251,7 +251,7 @@ export default function Home() {
 								{/* Yellow Experience Bar */}
 								<div className="absolute left-0 top-0 bottom-0 w-4 bg-secondary flex items-center justify-center">
 									<div className="transform -rotate-90 whitespace-nowrap text-white font-semibold text-sm">
-										25 Years of Experience
+										8+ Years of Experience
 									</div>
 								</div>
 
@@ -283,7 +283,7 @@ export default function Home() {
 									</div>
 
 									{/* Video Thumbnail */}
-									<div className="absolute -bottom-6 -right-6 w-52 h-40 bg-secondary border-4 border-white">
+									<div className="absolute -bottom-8 -right-6 w-52 h-40 bg-secondary border-4 border-white">
 										<Image
 											src={"/images/m-spray.jpeg"}
 											alt=""
@@ -385,14 +385,14 @@ export default function Home() {
 										CEO & Founder
 									</p>
 								</div>
-								<div className="w-24 h-12 relative flex items-center justify-center">
+								{/* <div className="w-24 h-12 relative flex items-center justify-center">
 									<Image
 										src={"/images/signature.png"}
 										fill
 										alt=""
 										className="object-contain"
 									/>
-								</div>
+								</div> */}
 							</div>
 						</div>
 					</div>

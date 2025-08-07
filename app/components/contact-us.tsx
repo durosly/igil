@@ -104,19 +104,17 @@ function ContactUsForm() {
 							Company Details
 						</h3>
 						<div className="space-y-4">
-							<div>
+							{/* <div>
 								<h4 className="font-semibold text-gray-900">Address</h4>
 								<p className="text-gray-700">[Your Company Address]</p>
-							</div>
+							</div> */}
 							<div>
 								<h4 className="font-semibold text-gray-900">Email</h4>
 								<p className="text-gray-700">info@igil.com</p>
 							</div>
 							<div>
 								<h4 className="font-semibold text-gray-900">Phone</h4>
-								<p className="text-gray-700">
-									+234 [Your Phone Number]
-								</p>
+								<p className="text-gray-700">+2349034840287</p>
 							</div>
 							<div>
 								<h4 className="font-semibold text-gray-900">

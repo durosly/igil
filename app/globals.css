@@ -1,21 +1,12 @@
 @import "tailwindcss";
-@plugin "daisyui";
-
-:root {
-	--background: oklch(1 0 0);
-	--foreground: #171717;
-	--igil-primary: oklch(0.6153 0.2203 25.53);
-	--igil-primary-dark: #d42a2f;
-	--igil-primary-light: #f04a4f;
-	--igil-gray: #6b7280;
-	--igil-light-gray: #f3f4f6;
-	--igil-dark-gray: oklch(0.3729 0.0306 259.73);
+@plugin "daisyui" {
+	themes: light --default;
 }
 
 @plugin "daisyui/theme" {
 	name: "light";
 	default: true;
-	color-scheme: light;
+	/* color-scheme: light; */
 
 	--color-primary: oklch(0.6153 0.2203 25.53);
 	--color-primary-content: oklch(1 0 0);
@@ -40,17 +31,6 @@
 
 	--color-error: oklch(0.6368 0.2078 25.33); /* red */
 	--color-error-content: oklch(1 0 0);
-}
-
-@theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--color-igil-primary: var(--igil-primary);
-	--color-igil-primary-dark: var(--igil-primary-dark);
-	--color-igil-primary-light: var(--igil-primary-light);
-	--color-igil-gray: var(--igil-gray);
-	--color-igil-light-gray: var(--igil-light-gray);
-	--color-igil-dark-gray: var(--igil-dark-gray);
 }
 
 * {
