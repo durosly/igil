@@ -34,6 +34,12 @@ function getPathInfo(path: string): PathInfo {
 			linkInfo: "Work",
 			desc: "Work we have done",
 		};
+	} else if (path === "/locations") {
+		return {
+			title: "Locations",
+			linkInfo: "Locations",
+			desc: "Nationwide availability",
+		};
 	}
 
 	return {
