@@ -56,10 +56,10 @@ function ContactUsPage() {
 							</p>
 							<div className="text-center">
 								<a
-									href="mailto:info@igil.com"
+									href="mailto:info@igil.net"
 									className="btn btn-primary btn-sm">
 									<Mail className="w-4 h-4 mr-2" />
-									info@igil.com
+									info@igil.net
 								</a>
 							</div>
 						</div>

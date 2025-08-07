@@ -110,7 +110,7 @@ function ContactUsForm() {
 							</div> */}
 							<div>
 								<h4 className="font-semibold text-gray-900">Email</h4>
-								<p className="text-gray-700">info@igil.com</p>
+								<p className="text-gray-700">info@igil.net</p>
 							</div>
 							<div>
 								<h4 className="font-semibold text-gray-900">Phone</h4>

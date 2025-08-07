@@ -184,9 +184,9 @@ function PublicLayout({ children }: { children: ReactNode }) {
 									Contact Info
 								</h3>
 								<div className="space-y-2 text-gray-400">
-									<p>Email: info@igil.com</p>
-									<p>Phone: +234 [Your Phone]</p>
-									<p>Address: [Your Address]</p>
+									<p>Email: info@igil.net</p>
+									<p>Phone: +2349034840287</p>
+									{/* <p>Address: [Your Address]</p> */}
 								</div>
 							</div>
 						</div>

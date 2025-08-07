@@ -212,12 +212,12 @@ function LocationsPage() {
 							<div className="flex items-center space-x-3">
 								<Phone className="w-5 h-5 text-primary" />
 								<span className="text-base-content">
-									+234 [Your Phone Number]
+									+2349034840287
 								</span>
 							</div>
 							<div className="flex items-center space-x-3">
 								<Mail className="w-5 h-5 text-primary" />
-								<span className="text-base-content">info@igil.com</span>
+								<span className="text-base-content">info@igil.net</span>
 							</div>
 							<div className="flex items-center space-x-3">
 								<Clock className="w-5 h-5 text-primary" />
