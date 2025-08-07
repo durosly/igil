@@ -28,6 +28,12 @@ function getPathInfo(path: string): PathInfo {
 			linkInfo: "Industries",
 			desc: "Areas you can find us",
 		};
+	} else if (path === "/work") {
+		return {
+			title: "Work",
+			linkInfo: "Work",
+			desc: "Work we have done",
+		};
 	}
 
 	return {
@@ -39,7 +45,6 @@ function getPathInfo(path: string): PathInfo {
 
 function SectionHeader() {
 	const pathname = usePathname();
-	console.log(pathname);
 	const pathInfo = getPathInfo(pathname);
 
 	return (
