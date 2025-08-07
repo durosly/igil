@@ -13,7 +13,9 @@ function PublicLayout({ children }: { children: ReactNode }) {
 					<div className="container mx-auto px-4">
 						<div className="flex items-center justify-between h-16">
 							{/* Logo Section */}
-							<div className="flex gap-2 items-center justify-center">
+							<Link
+								href={"/"}
+								className="flex gap-2 items-center justify-center">
 								<div className="flex items-center space-x-3">
 									{/* Igil Logo */}
 									<Image
@@ -33,7 +35,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 										Engineers
 									</span>
 								</h1>
-							</div>
+							</Link>
 
 							{/* Desktop Navigation */}
 							<nav className="hidden lg:flex items-center space-x-8">
