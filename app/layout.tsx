@@ -111,7 +111,7 @@ export default function RootLayout({
 		<html lang="en">
 			<head>
 				<link rel="icon" href="/favicon.ico" />
-				<link rel="apple-touch-icon" href="/images/logo.png" />
+				<link rel="apple-touch-icon" href="/images/cover.png" />
 				<meta name="theme-color" content="#dc2626" />
 				<meta name="msapplication-TileColor" content="#dc2626" />
 				<meta name="application-name" content="IDAN GLOBAL INSPECTION LIMITED" />
@@ -121,7 +121,7 @@ export default function RootLayout({
 				<meta name="format-detection" content="telephone=no" />
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="msapplication-config" content="/browserconfig.xml" />
-				<meta name="msapplication-TileImage" content="/images/logo.png" />
+				<meta name="msapplication-TileImage" content="/images/cover.png" />
 				<meta name="msapplication-tap-highlight" content="no" />
 
 				{/* Structured Data for Organization */}

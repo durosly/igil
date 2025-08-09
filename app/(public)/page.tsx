@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 		siteName: "IDAN GLOBAL INSPECTION LIMITED",
 		images: [
 			{
-				url: "/images/logo.png",
+				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
 				alt: "IDAN GLOBAL INSPECTION LIMITED - NDT Services",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
 		description:
 			"Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria.",
-		images: ["/images/logo.png"],
+		images: ["/images/cover.png"],
 	},
 	alternates: {
 		canonical: "https://igil.net",
