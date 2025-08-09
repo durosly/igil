@@ -2,10 +2,12 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { XIcon } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 
 function PublicLayout({ children }: { children: ReactNode }) {
 	return (
 		<div className="drawer">
+			<Script src="/js/hotjar.js" strategy="lazyOnload" />
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				{/* Sticky Header */}
