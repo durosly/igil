@@ -9,6 +9,7 @@ function ContactUsForm() {
 		phone: "",
 		message: "",
 	});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setFormData({
@@ -17,11 +18,35 @@ function ContactUsForm() {
 		});
 	};
 
-	const handleFormSubmit = (e: React.FormEvent) => {
+	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Form submitted:", formData);
-		alert("Thank you for your message! We'll get back to you soon.");
-		setFormData({ name: "", email: "", phone: "", message: "" });
+		if (isLoading) return;
+		setIsLoading(true);
+		try {
+			console.log("Form submitted:", formData);
+			const request = await fetch("/api/email", {
+				method: "POST",
+				body: JSON.stringify(formData),
+				headers: { "Content-Type": "application/json" },
+			});
+			const response = await request.json();
+
+			if (request.status !== 200 && request.status !== 201) {
+				throw new Error(response.message);
+			}
+			console.log(response);
+			alert("Thank you for your message! We'll get back to you soon.");
+			// setFormData({ name: "", email: "", phone: "", message: "" });
+		} catch (error) {
+			let message = "Something went wrong. Please, try again";
+			if (error instanceof Error) {
+				message = error.message;
+			}
+
+			alert(message);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -50,6 +75,7 @@ function ContactUsForm() {
 									value={formData.name}
 									onChange={handleFormChange}
 									required
+									disabled={isLoading}
 									className="input w-full"
 								/>
 							</div>
@@ -64,6 +90,7 @@ function ContactUsForm() {
 									value={formData.email}
 									onChange={handleFormChange}
 									required
+									disabled={isLoading}
 									className="input w-full"
 								/>
 							</div>
@@ -77,6 +104,7 @@ function ContactUsForm() {
 									name="phone"
 									value={formData.phone}
 									onChange={handleFormChange}
+									disabled={isLoading}
 									className="input w-full"
 								/>
 							</div>
@@ -91,11 +119,38 @@ function ContactUsForm() {
 									value={formData.message}
 									onChange={handleFormChange}
 									required
+									disabled={isLoading}
 									className="textarea w-full"
 								/>
 							</div>
-							<button type="submit" className="cta-button w-full">
-								Send Message
+							<button
+								type="submit"
+								disabled={isLoading}
+								className="btn btn-primary btn-block">
+								{isLoading ? (
+									<>
+										<svg
+											className="animate-spin -ml-1 mr-3 size-5"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24">
+											<circle
+												className="opacity-25"
+												cx="12"
+												cy="12"
+												r="10"
+												stroke="currentColor"
+												strokeWidth="4"></circle>
+											<path
+												className="opacity-75"
+												fill="currentColor"
+												d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+										</svg>
+										Sending...
+									</>
+								) : (
+									"Send Message"
+								)}
 							</button>
 						</form>
 					</div>
