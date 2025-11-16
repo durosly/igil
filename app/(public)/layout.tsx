@@ -125,11 +125,12 @@ function PublicLayout({ children }: { children: ReactNode }) {
 								<div className="text-sm text-gray-400 mb-4">
 									IDAN GLOBAL INTEGRATED LIMITED
 								</div>
-								<p className="text-gray-400 mb-4">
+								<p className="text-gray-400 mb-2">
 									Your trusted partner in reliable NDT solutions,
 									ensuring safety, quality, and reliability across
 									all industries.
 								</p>
+								<p className="text-xs text-gray-500">RC: 8985106</p>
 							</div>
 
 							<div>
@@ -232,6 +233,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 								©2025 IGIL - IDAN GLOBAL INTEGRATED LIMITED. All rights
 								reserved.
 							</div>
+							<div className="text-gray-400 text-sm mt-2">RC: 8985106</div>
 						</div>
 					</div>
 				</footer>

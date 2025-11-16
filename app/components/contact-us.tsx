@@ -199,6 +199,12 @@ function ContactUsForm() {
 									Saturday: 9:00 AM - 3:00 PM
 								</p>
 							</div>
+							<div>
+								<h4 className="font-semibold text-gray-900">
+									Registration
+								</h4>
+								<p className="text-gray-700">RC: 8985106</p>
+							</div>
 						</div>
 					</div>
 				</div>

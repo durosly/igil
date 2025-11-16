@@ -75,6 +75,9 @@ function AboutUsPage() {
 							<div className="bg-base-100 border border-base-300  p-8">
 								<Building2 className="w-16 h-16 mx-auto mb-4" />
 								<p className="text-lg font-medium">Established 2010</p>
+								<p className="text-sm text-gray-600 mt-2">
+									RC: 8985106
+								</p>
 							</div>
 						</div>
 					</div>
