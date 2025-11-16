@@ -1,8 +1,8 @@
-# SEO Improvements for IDAN GLOBAL INSPECTION LIMITED (IGIL)
+# SEO Improvements for IDAN GLOBAL INTEGRATED LIMITED (IGIL)
 
 ## Overview
 
-This document outlines the comprehensive SEO improvements implemented for IDAN GLOBAL INSPECTION LIMITED (IGIL), a leading Non-Destructive Testing (NDT) services provider in Nigeria.
+This document outlines the comprehensive SEO improvements implemented for IDAN GLOBAL INTEGRATED LIMITED (IGIL), a leading Non-Destructive Testing (NDT) services provider in Nigeria.
 
 ## Key SEO Improvements Implemented
 
@@ -78,10 +78,10 @@ This document outlines the comprehensive SEO improvements implemented for IDAN G
 ### Meta Tags Structure
 
 ```html
-<title>IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria</title>
+<title>IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria</title>
 <meta
 	name="description"
-	content="IDAN GLOBAL INSPECTION LIMITED (IGIL) is a leading provider of Non-Destructive Testing (NDT) services in Nigeria. We offer UT, MPI, DPI, RT/RFI, VT/VE, PMI, Hardness Testing, and NDT equipment sales. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries." />
+	content="IDAN GLOBAL INTEGRATED LIMITED (IGIL) is a leading provider of Non-Destructive Testing (NDT) services in Nigeria. We offer UT, MPI, DPI, RT/RFI, VT/VE, PMI, Hardness Testing, and NDT equipment sales. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries." />
 <meta
 	name="keywords"
 	content="NDT services Nigeria, Non-Destructive Testing, Ultrasonic Testing, Magnetic Particle Inspection, Dye Penetrant Inspection, Radiographic Testing, Visual Testing, Positive Material Identification, Hardness Testing, NDT equipment sales, ISO 9712 certified, ASNT Level II, Industrial inspection, Quality assurance, Safety testing, Material testing, Welding inspection, Pipeline inspection, Pressure vessel testing, Structural integrity testing" />
@@ -90,7 +90,7 @@ This document outlines the comprehensive SEO improvements implemented for IDAN G
 ### Open Graph Tags
 
 ```html
-<meta property="og:title" content="IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria" />
+<meta property="og:title" content="IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria" />
 <meta
 	property="og:description"
 	content="Leading provider of Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries." />
@@ -105,7 +105,7 @@ This document outlines the comprehensive SEO improvements implemented for IDAN G
 {
 	"@context": "https://schema.org",
 	"@type": "Organization",
-	"name": "IDAN GLOBAL INSPECTION LIMITED",
+	"name": "IDAN GLOBAL INTEGRATED LIMITED",
 	"alternateName": "IGIL",
 	"url": "https://igil.net",
 	"logo": "https://igil.net/images/logo.png",
@@ -184,6 +184,6 @@ This document outlines the comprehensive SEO improvements implemented for IDAN G
 
 ## Conclusion
 
-The implemented SEO improvements provide a solid foundation for IDAN GLOBAL INSPECTION LIMITED's online presence. The combination of technical SEO, structured data, and targeted content optimization should significantly improve search engine visibility and user experience.
+The implemented SEO improvements provide a solid foundation for IDAN GLOBAL INTEGRATED LIMITED's online presence. The combination of technical SEO, structured data, and targeted content optimization should significantly improve search engine visibility and user experience.
 
 The focus on NDT-specific keywords, local SEO for Nigeria, and professional certifications (ISO 9712, ASNT Level II) positions the company as a leading authority in the Non-Destructive Testing industry in Nigeria.

@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+	title: "Our Work & Projects - IDAN GLOBAL INTEGRATED LIMITED",
 	description:
 		"Explore IDAN's portfolio of successful NDT projects including Dangote Cement Factory, maritime vessel inspections, pipeline integrity assessments, and industrial equipment testing. See our track record of 10+ completed projects across various industries.",
 	keywords: [
@@ -28,17 +28,17 @@ export const metadata: Metadata = {
 		"manufacturing inspection",
 	],
 	openGraph: {
-		title: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+		title: "Our Work & Projects - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"Explore IDAN's portfolio of successful NDT projects including Dangote Cement Factory, maritime vessel inspections, pipeline integrity assessments, and industrial equipment testing. See our track record of 10+ completed projects across various industries.",
 		url: "https://igil.net/work",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+				alt: "Our Work & Projects - IDAN GLOBAL INTEGRATED LIMITED",
 			},
 		],
 		locale: "en_US",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Our Work & Projects - IDAN GLOBAL INSPECTION LIMITED",
+		title: "Our Work & Projects - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"Explore IDAN's portfolio of successful NDT projects including Dangote Cement Factory, maritime vessel inspections, pipeline integrity assessments, and industrial equipment testing. See our track record of 10+ completed projects across various industries.",
 		images: ["/images/cover.png"],

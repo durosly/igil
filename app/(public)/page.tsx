@@ -21,7 +21,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
 	title: "Home",
 	description:
-		"IDAN GLOBAL INSPECTION LIMITED (IGIL) - Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries.",
+		"IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries.",
 	keywords: [
 		"NDT services Nigeria",
 		"Non-Destructive Testing",
@@ -35,17 +35,17 @@ export const metadata: Metadata = {
 		"Radiographic Testing",
 	],
 	openGraph: {
-		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		title: "IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria",
 		description:
 			"Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals.",
 		url: "https://igil.net",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "IDAN GLOBAL INSPECTION LIMITED - NDT Services",
+				alt: "IDAN GLOBAL INTEGRATED LIMITED - NDT Services",
 			},
 		],
 		locale: "en_US",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		title: "IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria",
 		description:
 			"Your trusted partner for comprehensive Non-Destructive Testing (NDT) services in Nigeria.",
 		images: ["/images/cover.png"],
@@ -171,12 +171,12 @@ export default function Home() {
 						Ensuring Safety, Quality, and Reliability in Non-Destructive Testing
 					</h1>
 					<p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto text-gray-700">
-						IDAN GLOBAL INSPECTION LIMITED (IGIL) — Your Trusted Partner in Reliable
+						IDAN GLOBAL INTEGRATED LIMITED (IGIL) — Your Trusted Partner in Reliable
 						NDT Solutions
 					</p>
 					<div className="mb-8 space-y-2">
 						<p>
-							At IDAN GLOBAL INSPECTION LIMITED (IGIL), we take pride in being
+							At IDAN GLOBAL INTEGRATED LIMITED (IGIL), we take pride in being
 							a trusted leader in Non-Destructive Testing services. Our
 							culture and business model offer clients the best of both
 							worlds: the dedicated, hands-on service of a specialized firm

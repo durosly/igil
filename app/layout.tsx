@@ -10,12 +10,13 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://igil.net"),
 	title: {
-		default: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
-		template: "%s | IDAN GLOBAL INSPECTION LIMITED",
+		default: "IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		template: "%s | IDAN GLOBAL INTEGRATED LIMITED",
 	},
 	description:
-		"IDAN GLOBAL INSPECTION LIMITED (IGIL) is a leading provider of Non-Destructive Testing (NDT) services in Nigeria. We offer UT, MPI, DPI, RT/RFI, VT/VE, PMI, Hardness Testing, and NDT equipment sales. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries.",
+		"IDAN GLOBAL INTEGRATED LIMITED (IGIL) is a leading provider of Non-Destructive Testing (NDT) services in Nigeria. We offer UT, MPI, DPI, RT/RFI, VT/VE, PMI, Hardness Testing, and NDT equipment sales. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries.",
 	keywords: [
 		"NDT services Nigeria",
 		"Non-Destructive Testing",
@@ -38,9 +39,9 @@ export const metadata: Metadata = {
 		"Pressure vessel testing",
 		"Structural integrity testing",
 	],
-	authors: [{ name: "IDAN GLOBAL INSPECTION LIMITED" }],
-	creator: "IDAN GLOBAL INSPECTION LIMITED",
-	publisher: "IDAN GLOBAL INSPECTION LIMITED",
+	authors: [{ name: "IDAN GLOBAL INTEGRATED LIMITED" }],
+	creator: "IDAN GLOBAL INTEGRATED LIMITED",
+	publisher: "IDAN GLOBAL INTEGRATED LIMITED",
 	robots: {
 		index: true,
 		follow: true,
@@ -56,22 +57,22 @@ export const metadata: Metadata = {
 		type: "website",
 		locale: "en_US",
 		url: "https://igil.net",
-		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		title: "IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria",
 		description:
 			"Leading provider of Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals ensuring safety, quality, and reliability across all industries.",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "IDAN GLOBAL INSPECTION LIMITED Logo",
+				alt: "IDAN GLOBAL INTEGRATED LIMITED Logo",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "IDAN GLOBAL INSPECTION LIMITED (IGIL) - Leading NDT Services in Nigeria",
+		title: "IDAN GLOBAL INTEGRATED LIMITED (IGIL) - Leading NDT Services in Nigeria",
 		description:
 			"Leading provider of Non-Destructive Testing (NDT) services in Nigeria. ISO 9712 and ASNT Level II certified professionals.",
 		images: ["/images/cover.png"],
@@ -86,11 +87,11 @@ export const metadata: Metadata = {
 		"geo.placename": "Nigeria",
 		"geo.position": "9.0820;8.6753",
 		ICBM: "9.0820, 8.6753",
-		"DC.title": "IDAN GLOBAL INSPECTION LIMITED (IGIL)",
+		"DC.title": "IDAN GLOBAL INTEGRATED LIMITED (IGIL)",
 		"DC.description": "Leading provider of Non-Destructive Testing (NDT) services in Nigeria",
 		"DC.subject": "NDT, Non-Destructive Testing, Industrial Inspection, Quality Assurance",
-		"DC.creator": "IDAN GLOBAL INSPECTION LIMITED",
-		"DC.publisher": "IDAN GLOBAL INSPECTION LIMITED",
+		"DC.creator": "IDAN GLOBAL INTEGRATED LIMITED",
+		"DC.publisher": "IDAN GLOBAL INTEGRATED LIMITED",
 		"DC.contributor": "IDOGHOR ANTHONY URUEMU",
 		"DC.date": "2024",
 		"DC.type": "Service",
@@ -98,7 +99,7 @@ export const metadata: Metadata = {
 		"DC.identifier": "https://igil.net",
 		"DC.language": "en",
 		"DC.coverage": "Nigeria",
-		"DC.rights": "Copyright © 2024 IDAN GLOBAL INSPECTION LIMITED. All rights reserved.",
+		"DC.rights": "Copyright © 2024 IDAN GLOBAL INTEGRATED LIMITED. All rights reserved.",
 	},
 };
 
@@ -114,7 +115,7 @@ export default function RootLayout({
 				<link rel="apple-touch-icon" href="/images/cover.png" />
 				<meta name="theme-color" content="#dc2626" />
 				<meta name="msapplication-TileColor" content="#dc2626" />
-				<meta name="application-name" content="IDAN GLOBAL INSPECTION LIMITED" />
+				<meta name="application-name" content="IDAN GLOBAL INTEGRATED LIMITED" />
 				<meta name="apple-mobile-web-app-title" content="IGIL" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -131,7 +132,7 @@ export default function RootLayout({
 						__html: JSON.stringify({
 							"@context": "https://schema.org",
 							"@type": "Organization",
-							name: "IDAN GLOBAL INSPECTION LIMITED",
+							name: "IDAN GLOBAL INTEGRATED LIMITED",
 							alternateName: "IGIL",
 							url: "https://igil.net",
 							logo: "https://igil.net/images/logo.png",
@@ -235,7 +236,7 @@ export default function RootLayout({
 								jobTitle: "CEO & Founder",
 								worksFor: {
 									"@type": "Organization",
-									name: "IDAN GLOBAL INSPECTION LIMITED",
+									name: "IDAN GLOBAL INTEGRATED LIMITED",
 								},
 							},
 							areaServed: {

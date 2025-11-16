@@ -17,9 +17,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
 	title: "About Us",
 	description:
-		"Learn about IDAN GLOBAL INSPECTION LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010. ISO 9712 and ASNT Level II certified professionals with 8+ years of experience in industrial safety and quality assurance.",
+		"Learn about IDAN GLOBAL INTEGRATED LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010. ISO 9712 and ASNT Level II certified professionals with 8+ years of experience in industrial safety and quality assurance.",
 	keywords: [
-		"About IDAN GLOBAL INSPECTION LIMITED",
+		"About IDAN GLOBAL INTEGRATED LIMITED",
 		"IGIL company",
 		"NDT company Nigeria",
 		"Industrial inspection company",
@@ -31,17 +31,17 @@ export const metadata: Metadata = {
 		"IDOGHOR ANTHONY URUEMU",
 	],
 	openGraph: {
-		title: "About Us - IDAN GLOBAL INSPECTION LIMITED",
+		title: "About Us - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
-			"Learn about IDAN GLOBAL INSPECTION LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010. ISO 9712 and ASNT Level II certified professionals.",
+			"Learn about IDAN GLOBAL INTEGRATED LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010. ISO 9712 and ASNT Level II certified professionals.",
 		url: "https://igil.net/about-us",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "About IDAN GLOBAL INSPECTION LIMITED",
+				alt: "About IDAN GLOBAL INTEGRATED LIMITED",
 			},
 		],
 		locale: "en_US",
@@ -49,9 +49,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "About Us - IDAN GLOBAL INSPECTION LIMITED",
+		title: "About Us - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
-			"Learn about IDAN GLOBAL INSPECTION LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010.",
+			"Learn about IDAN GLOBAL INTEGRATED LIMITED (IGIL) - a leading NDT services provider in Nigeria since 2010.",
 		images: ["/images/cover.png"],
 	},
 	alternates: {

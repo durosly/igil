@@ -22,17 +22,17 @@ export const metadata: Metadata = {
 		"Industrial inspection services",
 	],
 	openGraph: {
-		title: "NDT Services - IDAN GLOBAL INSPECTION LIMITED",
+		title: "NDT Services - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"Comprehensive Non-Destructive Testing (NDT) services including UT, MPI, DPI, RT/RFI, VT/VE, PMI, Hardness Testing, and NDT equipment sales.",
 		url: "https://igil.net/services",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "NDT Services - IDAN GLOBAL INSPECTION LIMITED",
+				alt: "NDT Services - IDAN GLOBAL INTEGRATED LIMITED",
 			},
 		],
 		locale: "en_US",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "NDT Services - IDAN GLOBAL INSPECTION LIMITED",
+		title: "NDT Services - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"Comprehensive Non-Destructive Testing (NDT) services including UT, MPI, DPI, RT/RFI, VT/VE, PMI, Hardness Testing, and NDT equipment sales.",
 		images: ["/images/cover.png"],
@@ -136,7 +136,7 @@ function ServicesPage() {
 								About Our Services
 							</h3>
 							<p className="text-base-content/70 leading-relaxed">
-								Discover how IDAN GLOBAL INSPECTION LIMITED (IGIL)
+								Discover how IDAN GLOBAL INTEGRATED LIMITED (IGIL)
 								provides comprehensive Non-Destructive Testing
 								solutions. Our expert team ensures safety, quality, and
 								reliability across all industrial applications.

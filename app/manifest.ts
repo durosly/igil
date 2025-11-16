@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "IDAN GLOBAL INSPECTION LIMITED",
+		name: "IDAN GLOBAL INTEGRATED LIMITED",
 		short_name: "IGIL",
 		description: "Leading provider of Non-Destructive Testing (NDT) services in Nigeria",
 		start_url: "/",

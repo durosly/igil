@@ -3,7 +3,7 @@ import { Building2, Store, GraduationCap, Zap, Shield, Stethoscope, Hotel, Cog, 
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+	title: "Industries We Serve - IDAN GLOBAL INTEGRATED LIMITED",
 	description:
 		"IDAN serves diverse industries including Oil & Gas, Industrial, Healthcare, Education, Energy & Utility, Federal Government, Hospitality, Commercial & Retail, Civic & Local Government, and Science & Technology sectors with comprehensive NDT services.",
 	keywords: [
@@ -26,17 +26,17 @@ export const metadata: Metadata = {
 		"industrial solutions Nigeria",
 	],
 	openGraph: {
-		title: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+		title: "Industries We Serve - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"IDAN operates across diverse sectors including Oil & Gas, Industrial, Healthcare, Education, Energy & Utility, Federal Government, Hospitality, Commercial & Retail, Civic & Local Government, and Science & Technology with innovative solutions and exceptional results.",
 		url: "https://igil.net/industries",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+				alt: "Industries We Serve - IDAN GLOBAL INTEGRATED LIMITED",
 			},
 		],
 		locale: "en_US",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Industries We Serve - IDAN GLOBAL INSPECTION LIMITED",
+		title: "Industries We Serve - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"IDAN operates across diverse sectors including Oil & Gas, Industrial, Healthcare, Education, Energy & Utility, Federal Government, Hospitality, Commercial & Retail, Civic & Local Government, and Science & Technology with innovative solutions and exceptional results.",
 		images: ["/images/cover.png"],

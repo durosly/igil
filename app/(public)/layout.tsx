@@ -123,7 +123,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 									IGIL
 								</div>
 								<div className="text-sm text-gray-400 mb-4">
-									IDAN GLOBAL INSPECTION LIMITED
+									IDAN GLOBAL INTEGRATED LIMITED
 								</div>
 								<p className="text-gray-400 mb-4">
 									Your trusted partner in reliable NDT solutions,
@@ -210,7 +210,7 @@ function PublicLayout({ children }: { children: ReactNode }) {
 
 						<div className="border-t border-gray-800 mt-12 pt-8 text-center">
 							<div className="text-gray-400 text-sm">
-								©2025 IGIL - IDAN GLOBAL INSPECTION LIMITED. All rights
+								©2025 IGIL - IDAN GLOBAL INTEGRATED LIMITED. All rights
 								reserved.
 							</div>
 						</div>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-	title: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+	title: "Nationwide Coverage - IDAN GLOBAL INTEGRATED LIMITED",
 	description:
 		"IDAN provides comprehensive NDT services across all 36 states of Nigeria. From Lagos to Abuja, Port Harcourt to Kano, we offer nationwide coverage with local expertise, rapid response, and consistent quality standards.",
 	keywords: [
@@ -27,17 +27,17 @@ export const metadata: Metadata = {
 		"rapid response inspection",
 	],
 	openGraph: {
-		title: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+		title: "Nationwide Coverage - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"IDAN provides comprehensive NDT services across all 36 states of Nigeria. From the bustling ports of Lagos to the industrial heartlands of the Niger Delta, from the political capital of Abuja to the emerging cities of the North, we ensure quality and safety wherever you operate.",
 		url: "https://igil.net/locations",
-		siteName: "IDAN GLOBAL INSPECTION LIMITED",
+		siteName: "IDAN GLOBAL INTEGRATED LIMITED",
 		images: [
 			{
 				url: "/images/cover.png",
 				width: 1200,
 				height: 630,
-				alt: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+				alt: "Nationwide Coverage - IDAN GLOBAL INTEGRATED LIMITED",
 			},
 		],
 		locale: "en_US",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Nationwide Coverage - IDAN GLOBAL INSPECTION LIMITED",
+		title: "Nationwide Coverage - IDAN GLOBAL INTEGRATED LIMITED",
 		description:
 			"IDAN provides comprehensive NDT services across all 36 states of Nigeria. From the bustling ports of Lagos to the industrial heartlands of the Niger Delta, from the political capital of Abuja to the emerging cities of the North, we ensure quality and safety wherever you operate.",
 		images: ["/images/cover.png"],
@@ -104,7 +104,7 @@ function LocationsPage() {
 				<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<h1 className="text-4xl md:text-6xl font-bold mb-6">Nationwide Coverage</h1>
 					<p className="text-xl md:text-2xl text-gray-800 mb-8 max-w-4xl mx-auto">
-						IDAN GLOBAL INSPECTION LIMITED provides comprehensive NDT services
+						IDAN GLOBAL INTEGRATED LIMITED provides comprehensive NDT services
 						across all 36 states of Nigeria, ensuring quality and safety wherever
 						you operate.
 					</p>
