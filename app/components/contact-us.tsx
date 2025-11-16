@@ -169,7 +169,24 @@ function ContactUsForm() {
 							</div>
 							<div>
 								<h4 className="font-semibold text-gray-900">Phone</h4>
-								<p className="text-gray-700">+2349034840287</p>
+
+								<a
+									href="tel:+2349034840287"
+									className="block text-gray-700 hover:text-gray-900">
+									+2349034840287
+								</a>
+
+								<a
+									href="tel:+2349040034933"
+									className="block text-gray-700 hover:text-gray-900">
+									+2349040034933
+								</a>
+
+								<a
+									href="tel:+2349034840287"
+									className="block text-gray-700 hover:text-gray-900">
+									+2349034840287
+								</a>
 							</div>
 							<div>
 								<h4 className="font-semibold text-gray-900">

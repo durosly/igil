@@ -465,9 +465,9 @@ export default function Home() {
 							{/* Signature Block */}
 							<div className="flex items-center space-x-4 pt-4">
 								<div>
-									<p className="font-semibold capitalize text-gray-900">
+									{/* <p className="font-semibold capitalize text-gray-900">
 										IDOGHOR ANTHONY URUEMU
-									</p>
+									</p> */}
 									<p className="text-sm text-gray-600">
 										CEO & Founder
 									</p>

@@ -202,7 +202,26 @@ function PublicLayout({ children }: { children: ReactNode }) {
 								</h3>
 								<div className="space-y-2 text-gray-400">
 									<p>Email: info@igil.net</p>
-									<p>Phone: +2349034840287</p>
+									<p>
+										Phone:{" "}
+										<a
+											href="tel:+2349034840287"
+											className="text-gray-400 hover:text-white">
+											+2349034840287
+										</a>
+										,{" "}
+										<a
+											href="tel:+2349040034933"
+											className="text-gray-400 hover:text-white">
+											+2349040034933
+										</a>
+										,{" "}
+										<a
+											href="tel:+2349034840287"
+											className="text-gray-400 hover:text-white">
+											+2349034840287
+										</a>
+									</p>
 									{/* <p>Address: [Your Address]</p> */}
 								</div>
 							</div>
