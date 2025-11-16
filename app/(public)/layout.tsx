@@ -128,7 +128,11 @@ function PublicLayout({ children }: { children: ReactNode }) {
 								<p className="text-gray-400 mb-2">
 									Your trusted partner in reliable NDT solutions,
 									ensuring safety, quality, and reliability across
-									all industries.
+									all industries. We specialize in Non-Destructive
+									Testing (NDT) in Oil and Gas industries, sales
+									of NDT equipment, Procurement, Designing and its
+									Services, hiring of equipment and hiring of
+									labor.
 								</p>
 								<p className="text-xs text-gray-500">RC: 8985106</p>
 							</div>

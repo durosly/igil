@@ -184,6 +184,12 @@ export default function Home() {
 							expertise of a large inspection company.
 						</p>
 						<p>
+							We specialize in <strong>Non-Destructive Testing (NDT)</strong> in Oil and Gas industries,{" "}
+							<strong>sales of NDT equipment</strong>, <strong>Procurement</strong>,{" "}
+							<strong>Designing and its Services</strong>, <strong>hiring of equipment</strong>, and{" "}
+							<strong>hiring of labor</strong>.
+						</p>
+						<p>
 							From routine equipment checks to large-scale industrial
 							projects, our team has the skills, certifications, and
 							innovative solutions to scale and integrate our services

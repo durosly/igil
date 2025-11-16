@@ -84,6 +84,35 @@ function AboutUsPage() {
 				</div>
 			</section>
 
+			{/* What We Do / Business Objective */}
+			<section className="py-20 bg-base-100">
+				<div className="container mx-auto px-4">
+					<div className="max-w-4xl mx-auto">
+						<div className="text-center mb-12">
+							<h2 className="text-3xl md:text-4xl font-bold mb-4">
+								What We Do
+							</h2>
+							<p className="text-lg text-gray-600">
+								Our comprehensive range of services and solutions
+							</p>
+						</div>
+						<div className="bg-gradient-to-br from-primary/5 to-secondary/5 p-8 rounded-lg border border-primary/10">
+							<p className="text-gray-700 leading-relaxed text-lg">
+								<strong>IDAN GLOBAL INTEGRATED LIMITED</strong>{" "}
+								specializes in{" "}
+								<strong>Non-Destructive Testing (NDT)</strong> in Oil
+								and Gas industries,{" "}
+								<strong>sales of NDT equipment</strong>,{" "}
+								<strong>Procurement</strong>,{" "}
+								<strong>Designing and its Services</strong>,{" "}
+								<strong>hiring of equipment</strong>, and{" "}
+								<strong>hiring of labor</strong>.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			{/* Mission & Vision */}
 			<section className="py-20">
 				<div className="container mx-auto px-4">
