@@ -1,14 +1,14 @@
-import { auth } from "@/lib/auth";
+// import { auth } from "@/lib/auth";
 
 export async function GET() {
 	try {
-		await auth.api.signUpEmail({
-			body: {
-				name: "Admin Test",
-				email: "test@example.com",
-				password: "nice1234",
-			},
-		});
+		// await auth.api.signUpEmail({
+		// 	body: {
+		// 		name: "Admin Test",
+		// 		email: "admin@igil.net",
+		// 		password: "nice1234",
+		// 	},
+		// });
 
 		return Response.json({ message: "green" });
 	} catch (error) {

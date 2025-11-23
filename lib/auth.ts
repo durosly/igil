@@ -9,12 +9,13 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 		requireEmailVerification: false,
+		disableSignUp: true,
 	},
 	session: {
 		expiresIn: 60 * 60 * 24 * 7, // 7 days
 		updateAge: 60 * 60 * 24, // 1 day
 	},
-	baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+	baseURL: process.env.BETTER_AUTH_URL,
 	basePath: "/api/auth",
 	secret: process.env.BETTER_AUTH_SECRET!,
 });
