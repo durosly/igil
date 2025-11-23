@@ -57,6 +57,11 @@ function PublicLayout({ children }: { children: ReactNode }) {
 									Work
 								</Link>
 								<Link
+									href="/gallery"
+									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
+									Gallery
+								</Link>
+								<Link
 									href="/locations"
 									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
 									Locations
@@ -273,6 +278,9 @@ function PublicLayout({ children }: { children: ReactNode }) {
 						</li>
 						<li>
 							<Link href="/work">Work</Link>
+						</li>
+						<li>
+							<Link href="/gallery">Gallery</Link>
 						</li>
 						<li>
 							<Link href="/locations">Locations</Link>

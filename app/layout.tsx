@@ -3,6 +3,7 @@ import { Rubik } from "next/font/google";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Clientwrapper from "./components/client-wrapper";
 
 const rubik = Rubik({
 	variable: "--font-rubik",
@@ -269,7 +270,9 @@ export default function RootLayout({
 					}}
 				/>
 			</head>
-			<body className={`${rubik.variable} antialiased`}>{children}</body>
+			<body className={`${rubik.variable} antialiased`}>
+				<Clientwrapper>{children}</Clientwrapper>
+			</body>
 		</html>
 	);
 }
