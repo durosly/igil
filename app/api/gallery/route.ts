@@ -3,13 +3,37 @@ import connectDB from "@/lib/db";
 import GalleryImage from "@/models/GalleryImage";
 import { auth } from "@/lib/auth";
 
-// GET - List all gallery images (public)
-export async function GET() {
+// GET - List all gallery images with pagination (public)
+export async function GET(request: NextRequest) {
 	try {
 		await connectDB();
-		const images = await GalleryImage.find().sort({ order: 1, createdAt: -1 }).lean();
 
-		return NextResponse.json(images);
+		// Get pagination parameters from query string
+		const searchParams = request.nextUrl.searchParams;
+		const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
+		const limit = Math.min(12, Math.max(1, parseInt(searchParams.get("limit") || "12", 10))); // Max 12 items per page
+
+		const skip = (page - 1) * limit;
+
+		// Get total count for pagination metadata
+		const total = await GalleryImage.countDocuments();
+
+		// Fetch paginated images
+		const images = await GalleryImage.find().sort({ order: 1, createdAt: -1 }).skip(skip).limit(limit).lean();
+
+		const totalPages = Math.ceil(total / limit);
+
+		return NextResponse.json({
+			data: images,
+			pagination: {
+				page,
+				limit,
+				total,
+				totalPages,
+				hasNextPage: page < totalPages,
+				hasPrevPage: page > 1,
+			},
+		});
 	} catch (error) {
 		console.error("Error fetching gallery images:", error);
 		return NextResponse.json({ error: "Failed to fetch gallery images" }, { status: 500 });
