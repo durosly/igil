@@ -71,6 +71,16 @@ function PublicLayout({ children }: { children: ReactNode }) {
 									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
 									Igil Advantage
 								</Link>
+								<Link
+									href="/programs"
+									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
+									Programs
+								</Link>
+								<Link
+									href="/login"
+									className="text-gray-600 hover:text-gray-900 font-medium text-sm uppercase tracking-wide transition-colors">
+									Sign In
+								</Link>
 							</nav>
 
 							{/* Right Icons */}
@@ -287,6 +297,12 @@ function PublicLayout({ children }: { children: ReactNode }) {
 						</li>
 						<li>
 							<Link href="/about-us"> Igil Advantage</Link>
+						</li>
+						<li>
+							<Link href="/programs">Programs</Link>
+						</li>
+						<li>
+							<Link href="/login">Sign In</Link>
 						</li>
 					</ul>
 				</div>

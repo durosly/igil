@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { Images, LayoutDashboard, Menu, Settings, X } from "lucide-react";
+import { Images, LayoutDashboard, Menu, Settings, X, Users, BookOpen, Award, Calendar } from "lucide-react";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,12 +13,16 @@ interface AdminLayoutProps {
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {
 	const session = await auth.api.getSession({
-		headers: await headers(), // pass the headers
+		headers: await headers(),
 	});
 
-	// console.log({ session });
-
 	if (!session) return redirect("/");
+	if (!session.user) return redirect("/");
+
+	const userRole = (session.user as { role?: string }).role;
+	if (userRole !== "admin") {
+		return redirect("/student/dashboard");
+	}
 
 	return (
 		<div className="drawer lg:drawer-open">
@@ -46,7 +50,6 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
 			<div className="drawer-side z-50">
 				<label htmlFor="admin-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
 				<div className="menu bg-base-200 text-base-content min-h-full w-80 p-4 relative">
-					{/* Logo */}
 					<label htmlFor="admin-drawer" aria-label="open sidebar" className="btn btn-square btn-ghost absolute top-1 right-1 lg:hidden">
 						<X className="w-6 h-6" />
 					</label>
@@ -58,28 +61,50 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
 							<span className="text-xl font-bold">IGIL Admin</span>
 						</Link>
 					</div>
-					{/* Navigation */}
 					<ul className="space-y-2">
 						<li>
-							<Link href="/admin/dashboard" className={`flex items-center gap-3`}>
+							<Link href="/admin/dashboard" className="flex items-center gap-3">
 								<LayoutDashboard className="w-5 h-5" />
 								Dashboard
 							</Link>
 						</li>
 						<li>
-							<Link href="/admin/gallery" className={`flex items-center gap-3`}>
+							<Link href="/admin/students" className="flex items-center gap-3">
+								<Users className="w-5 h-5" />
+								Students
+							</Link>
+						</li>
+						<li>
+							<Link href="/admin/programs" className="flex items-center gap-3">
+								<BookOpen className="w-5 h-5" />
+								Programs
+							</Link>
+						</li>
+						<li>
+							<Link href="/admin/sessions" className="flex items-center gap-3">
+								<Calendar className="w-5 h-5" />
+								Sessions
+							</Link>
+						</li>
+						<li>
+							<Link href="/admin/certificates" className="flex items-center gap-3">
+								<Award className="w-5 h-5" />
+								Certificates
+							</Link>
+						</li>
+						<li>
+							<Link href="/admin/gallery" className="flex items-center gap-3">
 								<Images className="w-5 h-5" />
 								Gallery Management
 							</Link>
 						</li>
 						<li>
-							<Link href="/admin/settings" className={`flex items-center gap-3`}>
+							<Link href="/admin/settings" className="flex items-center gap-3">
 								<Settings className="w-5 h-5" />
 								Settings
 							</Link>
 						</li>
-					</ul>{" "}
-					{/* Logout Button */}
+					</ul>
 					<div className="mt-auto pt-8">
 						<LogoutBtn />
 					</div>

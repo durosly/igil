@@ -3,20 +3,19 @@ import { getSessionCookie } from "better-auth/cookies";
 
 export async function proxy(request: NextRequest) {
 	const sessionCookie = getSessionCookie(request);
-	// const { pathname } = request.nextUrl;
+	const { pathname } = request.nextUrl;
 
-	// console.log(pathname);
+	const isAdmin = pathname.startsWith("/admin");
+	const isStudent = pathname.startsWith("/student");
 
-	// THIS IS NOT SECURE!
-	// This is the recommended approach to optimistically redirect users
-	// We recommend handling auth checks in each page/route
-	if (!sessionCookie) {
-		return NextResponse.redirect(new URL("/", request.url));
+	// Protect admin, api/admin, and student routes: require session and redirect to login
+	if ((isAdmin || isStudent) && !sessionCookie) {
+		return NextResponse.redirect(new URL("/login", request.url));
 	}
 
 	return NextResponse.next();
 }
 
 export const config = {
-	matcher: ["/admin/:path*", "/api/admin/:path*"], // Specify the routes the middleware applies to
+	matcher: ["/admin/:path*", "/api/admin/:path*", "/student/:path*"],
 };

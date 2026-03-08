@@ -46,9 +46,13 @@ function getPathInfo(path: string): PathInfo {
 			linkInfo: "Contact US",
 			desc: "We can't wait to here from you",
 		};
+	} else if (path === "/programs") {
+		return {
+			title: "Our Programs",
+			linkInfo: "Programs",
+			desc: "Browse and register for our programs",
+		};
 	}
-
-	return {
 		title: "Default",
 		linkInfo: "Default Page",
 		desc: "Default page is been displayed",
