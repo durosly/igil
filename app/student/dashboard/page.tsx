@@ -5,7 +5,6 @@ import PaymentCode from "@/models/PaymentCode";
 import Program from "@/models/Program";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import StudentDashboardClient from "./__components/student-dashboard-client";
 
 export const metadata: Metadata = {
@@ -15,8 +14,7 @@ export const metadata: Metadata = {
 
 export default async function StudentDashboardPage() {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session?.user) redirect("/login");
-	const userId = session.user.id;
+	const userId = session!.user!.id;
 
 	await connectDB();
 	const [enrollments, paymentCodes, programs] = await Promise.all([

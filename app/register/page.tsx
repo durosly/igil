@@ -2,23 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import RegisterForm from "./__components/register-form";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
 	title: "Student Sign Up",
 	description: "Create your student account",
 };
 
-export default async function RegisterPage() {
-	const session = await auth.api.getSession({ headers: await headers() });
-	if (session?.user) {
-		const role = (session.user as { role?: string }).role;
-		if (role === "student") return redirect("/student/dashboard");
-		if (role === "admin") return redirect("/admin/dashboard");
-	}
-
+export default function RegisterPage() {
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-gray-50 p-4">
 			<div className="card bg-base-100 shadow-xl w-full max-w-md">

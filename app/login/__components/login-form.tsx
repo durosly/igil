@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 
@@ -10,7 +9,6 @@ type LoginFormValues = {
 };
 
 function LoginForm() {
-	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -25,6 +23,7 @@ function LoginForm() {
 			const result = await authClient.signIn.email({
 				email: data.email,
 				password: data.password,
+				callbackURL: "/",
 			});
 
 			if (result.error) {
@@ -33,16 +32,7 @@ function LoginForm() {
 				});
 				return;
 			}
-
-			const { data: session } = await authClient.getSession();
-			const role = (session?.user as { role?: string } | undefined)?.role;
-			if (role === "admin") {
-				router.push("/admin/dashboard");
-			} else if (role === "student") {
-				router.push("/student/dashboard");
-			} else {
-				router.push("/admin/dashboard");
-			}
+			// Redirect handled by proxy.ts via callbackURL -> /
 		} catch (err: unknown) {
 			const message = err instanceof Error ? err.message : "An error occurred. Please try again.";
 			setError("root", { message });

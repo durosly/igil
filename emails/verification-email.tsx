@@ -6,10 +6,16 @@ import {
 	Heading,
 	Hr,
 	Html,
+	Img,
 	Preview,
 	Section,
+	Tailwind,
 	Text,
 } from "@react-email/components";
+
+// Logo from remote origin: https://github.com/durosly/igil (raw GitHub)
+const LOGO_URL =
+	"https://raw.githubusercontent.com/durosly/igil/main/public/images/logo.png";
 
 interface VerificationEmailProps {
 	recipientName: string;
@@ -21,75 +27,46 @@ export function VerificationEmail({ recipientName, verificationUrl }: Verificati
 		<Html>
 			<Head />
 			<Preview>Verify your email address - IGIL</Preview>
-			<Body style={main}>
-				<Container style={container}>
-					<Heading style={h1}>Verify your email</Heading>
-					<Text style={text}>Hello {recipientName},</Text>
-					<Text style={text}>
-						Please verify your email address by clicking the button below. This will allow you to
-						access your student dashboard and register for programs.
-					</Text>
-					<Button style={button} href={verificationUrl}>
-						Verify Email Address
-					</Button>
-					<Hr style={hr} />
-					<Text style={footer}>
-						If you did not create an account, please ignore this email.
-					</Text>
-				</Container>
-			</Body>
+			<Tailwind>
+				<Body className="m-0 bg-slate-100 font-sans">
+					<Container className="mx-auto my-0 max-w-lg rounded-xl bg-white p-8 shadow-sm">
+						<Section className="mb-6 text-center">
+							<Img
+								src={LOGO_URL}
+								alt="IGIL - IDAN Global Integrated Limited"
+								width={140}
+								height={48}
+								className="mx-auto h-12 w-auto"
+							/>
+						</Section>
+						<Heading className="m-0 mb-4 text-2xl font-semibold text-red-600">
+							Verify your email
+						</Heading>
+						<Text className="m-0 mb-4 text-base leading-6 text-slate-600">
+							Hello {recipientName},
+						</Text>
+						<Text className="m-0 mb-6 text-base leading-6 text-slate-600">
+							Please verify your email address by clicking the button below. This will
+							allow you to access your student dashboard and register for programs.
+						</Text>
+						<Section className="my-6 text-center">
+							<Button
+								className="inline-block rounded-lg bg-red-600 px-6 py-3 text-base font-semibold text-white no-underline"
+								href={verificationUrl}
+							>
+								Verify Email Address
+							</Button>
+						</Section>
+						<Hr className="my-6 border-slate-200" />
+						<Text className="m-0 text-xs leading-5 text-slate-500">
+							If you did not create an account, please ignore this email.
+						</Text>
+						<Text className="mt-4 text-center text-xs text-slate-400">
+							IDAN Global Integrated Limited · Leading NDT Services in Nigeria
+						</Text>
+					</Container>
+				</Body>
+			</Tailwind>
 		</Html>
 	);
 }
-
-const main = {
-	backgroundColor: "#f6f9fc",
-	fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
-};
-
-const container = {
-	backgroundColor: "#ffffff",
-	margin: "0 auto",
-	padding: "40px 20px",
-	marginBottom: "64px",
-};
-
-const h1 = {
-	color: "#1a1a1a",
-	fontSize: "24px",
-	fontWeight: "600",
-	lineHeight: "1.3",
-	margin: "0 0 24px",
-};
-
-const text = {
-	color: "#525f7f",
-	fontSize: "16px",
-	lineHeight: "1.6",
-	margin: "0 0 16px",
-};
-
-const button = {
-	backgroundColor: "#0f172a",
-	borderRadius: "8px",
-	color: "#fff",
-	fontSize: "16px",
-	fontWeight: "600",
-	textDecoration: "none",
-	textAlign: "center" as const,
-	padding: "12px 24px",
-	margin: "24px 0",
-	display: "block",
-};
-
-const hr = {
-	borderColor: "#e6ebf1",
-	margin: "24px 0",
-};
-
-const footer = {
-	color: "#8898aa",
-	fontSize: "12px",
-	lineHeight: "1.5",
-	margin: "0",
-};

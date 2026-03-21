@@ -13,7 +13,7 @@ function LogoutBtn() {
 			await authClient.signOut({
 				fetchOptions: {
 					onSuccess: () => {
-						router.push("/"); // redirect to login page
+						router.replace("/login");
 					},
 				},
 			});

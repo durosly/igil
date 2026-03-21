@@ -1,5 +1,4 @@
 import { betterAuth } from "better-auth";
-import { createAuthMiddleware } from "better-auth/api";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { admin } from "better-auth/plugins/admin";
 import { getClient } from "./db";
@@ -11,19 +10,6 @@ const baseURL = process.env.BETTER_AUTH_URL;
 
 export const auth = betterAuth({
 	database: mongodbAdapter(db),
-	hooks: {
-		before: createAuthMiddleware(async (ctx) => {
-			// Public sign-up must never set role to admin; only admin create-user can.
-			if ((ctx.path === "sign-up/email" || ctx.path === "/sign-up/email") && ctx.body && typeof ctx.body === "object") {
-				return {
-					context: {
-						...ctx,
-						body: { ...ctx.body, role: "student" },
-					},
-				};
-			}
-		}),
-	},
 	user: {
 		additionalFields: {
 			role: {
@@ -48,13 +34,27 @@ export const auth = betterAuth({
 		requireEmailVerification: true,
 		sendVerificationOnSignIn: true,
 		disableSignUp: false,
-		async sendVerificationEmail(data: { user: { email: string; name?: string }; url: string }) {
-			await sendVerificationEmail({
-				to: data.user.email,
-				recipientName: data.user.name ?? data.user.email,
-				verificationUrl: data.url,
+		// async sendVerificationEmail(data: { user: { email: string; name?: string }; url: string }) {
+		// 	console.log("Sending verification email to", data.user.email);
+		// 	console.log("Verification URL", data.url);
+		// 	await sendVerificationEmail({
+		// 		to: data.user.email,
+		// 		recipientName: data.user.name ?? data.user.email,
+		// 		verificationUrl: data.url,
+		// 	});
+		// },
+	},
+	emailVerification: {
+		sendVerificationEmail: async ({ user, url }) => {
+			// console.log("Sending verification email to", user.email, token);
+			// console.log("Verification URL", url);
+			void sendVerificationEmail({
+				to: user.email,
+				recipientName: user.name ?? user.email,
+				verificationUrl: url,
 			});
 		},
+		sendOnSignIn: true
 	},
 	session: {
 		expiresIn: 60 * 60 * 24 * 7, // 7 days
@@ -63,7 +63,7 @@ export const auth = betterAuth({
 	baseURL: baseURL ?? "http://localhost:3000",
 	basePath: "/api/auth",
 	secret: process.env.BETTER_AUTH_SECRET!,
-	plugins: [admin()],
+	plugins: [admin({ defaultRole: "student" })],
 });
 
 export type Session = typeof auth.$Infer.Session;

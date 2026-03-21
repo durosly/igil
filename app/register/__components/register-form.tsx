@@ -10,7 +10,7 @@ import { toast } from "sonner";
 const registerSchema = z
 	.object({
 		name: z.string().min(1, "Name is required"),
-		email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+		email: z.email({ message: "Please enter a valid email address" }).min(1, "Email is required"),
 		password: z.string().min(8, "Password must be at least 8 characters"),
 		confirmPassword: z.string().min(1, "Please confirm your password"),
 	})
@@ -35,12 +35,15 @@ export default function RegisterForm() {
 
 	const onSubmit = async (data: RegisterFormValues) => {
 		try {
-			const result = await authClient.signUp.email({
-				email: data.email,
-				password: data.password,
-				name: data.name,
-				role: "student",
-			});
+			// role is set server-side via defaultValue; the admin plugin rejects role in sign-up body
+			const result = await authClient.signUp.email(
+				{
+					email: data.email,
+					password: data.password,
+					name: data.name,
+					callbackURL: "/register/verify-success",
+				} as Parameters<typeof authClient.signUp.email>[0]
+			);
 
 			if (result.error) {
 				setError("root", {
@@ -130,16 +133,14 @@ export default function RegisterForm() {
 						{...register("confirmPassword")}
 					/>
 					{errors.confirmPassword && (
-						<p className="text-error text-sm mt-1">{errors.confirmPassword.message}</p>
+						<p className="text-error text-sm mt-1">
+							{errors.confirmPassword.message}
+						</p>
 					)}
 				</div>
 
 				<div className="form-control mt-6">
-					<button
-						type="submit"
-						className="btn btn-primary"
-						disabled={isSubmitting}
-					>
+					<button type="submit" className="btn btn-primary" disabled={isSubmitting}>
 						{isSubmitting ? (
 							<>
 								<span className="loading loading-spinner" />

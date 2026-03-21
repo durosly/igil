@@ -1,9 +1,6 @@
-import { auth } from "@/lib/auth";
 import { LayoutDashboard, BookOpen, Award, Settings, Menu, X } from "lucide-react";
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import LogoutBtn from "@/app/admin/__components/logout-btn";
 
@@ -11,19 +8,7 @@ interface StudentLayoutProps {
 	children: ReactNode;
 }
 
-export default async function StudentLayout({ children }: StudentLayoutProps) {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
-
-	if (!session) return redirect("/login");
-	if (!session.user) return redirect("/login");
-
-	const userRole = (session.user as { role?: string }).role;
-	if (userRole !== "student") {
-		return redirect("/admin/dashboard");
-	}
-
+export default function StudentLayout({ children }: StudentLayoutProps) {
 	return (
 		<div className="drawer lg:drawer-open">
 			<input id="student-drawer" type="checkbox" className="drawer-toggle" />

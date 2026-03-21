@@ -1,9 +1,6 @@
-import { auth } from "@/lib/auth";
 import { Images, LayoutDashboard, Menu, Settings, X, Users, BookOpen, Award, Calendar } from "lucide-react";
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import LogoutBtn from "./__components/logout-btn";
 
@@ -11,19 +8,7 @@ interface AdminLayoutProps {
 	children: ReactNode;
 }
 
-export default async function AdminLayout({ children }: AdminLayoutProps) {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
-
-	if (!session) return redirect("/");
-	if (!session.user) return redirect("/");
-
-	const userRole = (session.user as { role?: string }).role;
-	if (userRole !== "admin") {
-		return redirect("/student/dashboard");
-	}
-
+export default function AdminLayout({ children }: AdminLayoutProps) {
 	return (
 		<div className="drawer lg:drawer-open">
 			<input id="admin-drawer" type="checkbox" className="drawer-toggle" />

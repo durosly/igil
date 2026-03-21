@@ -3,7 +3,6 @@ import connectDB from "@/lib/db";
 import Certificate from "@/models/Certificate";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { addHours, isAfter } from "date-fns";
 import CertificatesList from "./__components/certificates-list";
 
@@ -14,8 +13,7 @@ export const metadata: Metadata = {
 
 export default async function StudentCertificatesPage() {
 	const session = await auth.api.getSession({ headers: await headers() });
-	if (!session?.user) redirect("/login");
-	const userId = session.user.id;
+	const userId = session!.user!.id;
 
 	await connectDB();
 	const certificates = await Certificate.find({ userId })
