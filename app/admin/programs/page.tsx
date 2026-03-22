@@ -3,7 +3,7 @@ import connectDB from "@/lib/db";
 import Program from "@/models/Program";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import ProgramsList from "../__components/programs-list";
+import ProgramsList from "./__components/programs-list";
 
 export const metadata: Metadata = {
 	title: "Programs",
