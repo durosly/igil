@@ -2,16 +2,16 @@ import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } fro
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const s3Client = new S3Client({
-	endpoint: process.env.TEBI_ENDPOINT!,
-	region: process.env.TEBI_REGION || "us-east-1",
+	endpoint: process.env.R2_ENDPOINT!,
+	region: process.env.R2_REGION || "auto",
 	credentials: {
-		accessKeyId: process.env.TEBI_ACCESS_KEY_ID!,
-		secretAccessKey: process.env.TEBI_SECRET_ACCESS_KEY!,
+		accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+		secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
 	},
 	forcePathStyle: true,
 });
 
-const BUCKET_NAME = process.env.TEBI_BUCKET_NAME!;
+const BUCKET_NAME = process.env.R2_BUCKET_NAME!;
 
 /**
  * Generate a presigned URL for uploading an image
@@ -66,13 +66,15 @@ export async function deleteObject(key: string): Promise<void> {
 }
 
 /**
- * Get the public URL for an object (if bucket is public)
- * @param key - The S3 key (filename) for the object
- * @returns Public URL
+ * Public URL for objects served via R2 custom domain (e.g. Cloudflare CDN).
+ * Set R2_PUBLIC_BASE_URL in .env.local (no trailing slash), e.g. https://assets.igil.net
  */
 export function getPublicUrl(key: string): string {
-	const endpoint = process.env.TEBI_ENDPOINT!.replace(/^https?:\/\//, "");
-	return `https://${BUCKET_NAME}.${endpoint}/${key}`;
+	const base = (process.env.R2_PUBLIC_BASE_URL || "").replace(/\/$/, "");
+	if (!base) {
+		throw new Error("R2_PUBLIC_BASE_URL is required (e.g. https://assets.igil.net)");
+	}
+	return `${base}/${key}`;
 }
 
 export { s3Client, BUCKET_NAME };

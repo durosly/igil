@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { getPresignedUploadUrl } from "@/lib/storage";
+import { getPresignedUploadUrl, getPublicUrl } from "@/lib/storage";
 import { randomUUID } from "crypto";
 
 // POST - Generate presigned upload URL (admin only)
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({
 			uploadUrl,
 			key,
-			url: uploadUrl.split("?")[0], // Return the base URL without query params
+			url: getPublicUrl(key),
 		});
 	} catch (error) {
 		console.error("Error generating presigned URL:", error);

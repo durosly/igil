@@ -5,12 +5,12 @@ const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
 			{ protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
-			// Allow images from tebi.io - we'll extract hostname from TEBI_ENDPOINT
-			...(process.env.TEBI_ENDPOINT
+			// R2 public bucket / custom domain (R2_PUBLIC_BASE_URL)
+			...(process.env.R2_PUBLIC_BASE_URL
 				? [
 						{
 							protocol: "https" as const,
-							hostname: new URL(process.env.TEBI_ENDPOINT).hostname,
+							hostname: new URL(process.env.R2_PUBLIC_BASE_URL).hostname,
 							pathname: "/**",
 						},
 				  ]
