@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import connectDB from "@/lib/db";
 import ProgramSession from "@/models/ProgramSession";
 import Program from "@/models/Program";
-import SessionsManager from "../__components/sessions-manager";
+import SessionsManager from "./__components/sessions-manager";
 
 export const metadata: Metadata = {
 	title: "Sessions",

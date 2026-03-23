@@ -1,14 +1,27 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
-import Image from "next/image";
-import { UploadIcon, XIcon } from "lucide-react";
 import { handleError } from "@/lib/handle-error";
+import ProgramCoverUpload from "./program-cover-upload";
 
-const STATUS_OPTIONS = ["draft", "active", "completed"] as const;
+const STATUS_OPTIONS = ["draft", "active"] as const;
+
+const programFormSchema = z.object({
+	title: z.string().min(1, "Title is required"),
+	description: z.string().min(1, "Description is required"),
+	coverImageUrl: z.string(),
+	paymentInstruction: z.string(),
+	status: z.enum(STATUS_OPTIONS),
+});
+
+type ProgramFormValues = z.infer<typeof programFormSchema>;
 
 interface ProgramFormProps {
 	program?: {
@@ -23,205 +36,151 @@ interface ProgramFormProps {
 
 export default function ProgramForm({ program }: ProgramFormProps) {
 	const router = useRouter();
-	const [saving, setSaving] = useState(false);
-	const [coverPreview, setCoverPreview] = useState<string | null>(program?.coverImageUrl ?? null);
-	const [coverFile, setCoverFile] = useState<File | null>(null);
-	const fileInputRef = useRef<HTMLInputElement>(null);
+	const queryClient = useQueryClient();
+	const [coverUploading, setCoverUploading] = useState(false);
 
-	const [formData, setFormData] = useState({
-		title: program?.title ?? "",
-		description: program?.description ?? "",
-		coverImageUrl: program?.coverImageUrl ?? "",
-		paymentInstruction: program?.paymentInstruction ?? "",
-		status: program?.status ?? "draft",
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = useForm<ProgramFormValues>({
+		resolver: zodResolver(programFormSchema),
+		defaultValues: {
+			title: program?.title ?? "",
+			description: program?.description ?? "",
+			coverImageUrl: program?.coverImageUrl ?? "",
+			paymentInstruction: program?.paymentInstruction ?? "",
+			status: (program?.status as ProgramFormValues["status"]) ?? "draft",
+		},
 	});
 
-	const [errors, setErrors] = useState({
-		title: "",
-		description: "",
-	});
-
-	const validate = () => {
-		const e = { title: "", description: "" };
-		if (!formData.title.trim()) e.title = "Title is required";
-		if (!formData.description.trim()) e.description = "Description is required";
-		setErrors(e);
-		return !e.title && !e.description;
-	};
-
-	const handleCoverSelect = useCallback((file: File) => {
-		const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
-		if (!allowed.includes(file.type)) {
-			toast.error("Invalid file type");
-			return;
-		}
-		if (file.size > 10 * 1024 * 1024) {
-			toast.error("File must be under 10MB");
-			return;
-		}
-		setCoverFile(file);
-		const reader = new FileReader();
-		reader.onloadend = () => setCoverPreview(reader.result as string);
-		reader.readAsDataURL(file);
-	}, []);
-
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		if (!validate()) return;
-
-		setSaving(true);
-		try {
-			let coverImageUrl = formData.coverImageUrl;
-			if (coverFile) {
-				const uploadRes = await axios.post("/api/gallery/upload", {
-					fileName: coverFile.name,
-					contentType: coverFile.type,
-				});
-				const { uploadUrl, url } = uploadRes.data;
-				await axios.put(uploadUrl, coverFile, { headers: { "Content-Type": coverFile.type } });
-				coverImageUrl = url;
-			}
-
+	const saveMutation = useMutation({
+		mutationFn: async (data: ProgramFormValues) => {
 			const payload = {
-				title: formData.title.trim(),
-				description: formData.description.trim(),
-				paymentInstruction: formData.paymentInstruction.trim() || undefined,
-				status: formData.status,
-				coverImageUrl: coverImageUrl || undefined,
+				title: data.title.trim(),
+				description: data.description.trim(),
+				paymentInstruction: data.paymentInstruction.trim() || undefined,
+				status: data.status,
+				coverImageUrl: data.coverImageUrl.trim() || undefined,
 			};
-
 			if (program) {
-				const res = await axios.patch(`/api/programs/${program._id}`, payload);
-				toast.success("Program updated");
-				router.push("/admin/programs");
+				await axios.patch(`/api/programs/${program._id}`, payload);
 			} else {
 				await axios.post("/api/programs", payload);
-				toast.success("Program created");
-				router.push("/admin/programs");
 			}
-		} catch (err) {
-			toast.error(handleError(err));
-		} finally {
-			setSaving(false);
-		}
-	};
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["programs"] });
+			toast.success(program ? "Program updated" : "Program created");
+			router.push("/admin/programs");
+		},
+		onError: (err) => toast.error(handleError(err)),
+	});
+
+	const saving = saveMutation.isPending;
+	const blockEdits = saving || coverUploading;
+
+	const onSubmit = (data: ProgramFormValues) => saveMutation.mutate(data);
 
 	return (
-		<form onSubmit={handleSubmit} className="card bg-base-200 shadow-xl max-w-2xl">
-			<div className="card-body space-y-4">
-				<div className="form-control">
-					<label className="label">
-						<span className="label-text">Title *</span>
-					</label>
+		<form onSubmit={handleSubmit(onSubmit)} className="">
+			<div className="gap-6">
+				<fieldset className="fieldset w-full">
+					<legend className="fieldset-legend">Title</legend>
 					<input
+						id="program-title"
 						type="text"
-						className={`input input-bordered ${errors.title ? "input-error" : ""}`}
-						value={formData.title}
-						onChange={(e) => setFormData((d) => ({ ...d, title: e.target.value }))}
-						disabled={saving}
+						className={`input input-bordered w-full ${errors.title ? "input-error" : ""}`}
+						{...register("title")}
+						disabled={blockEdits}
+						aria-invalid={errors.title ? true : undefined}
+						aria-describedby={errors.title ? "program-title-error" : undefined}
 					/>
-					{errors.title && <span className="label-text-alt text-error">{errors.title}</span>}
-				</div>
+					{errors.title ? (
+						<p id="program-title-error" className="label text-error" role="alert">
+							{errors.title.message}
+						</p>
+					) : null}
+				</fieldset>
 
-				<div className="form-control">
-					<label className="label">
-						<span className="label-text">Description *</span>
-					</label>
+				<fieldset className="fieldset w-full">
+					<legend className="fieldset-legend">Description</legend>
 					<textarea
-						className={`textarea textarea-bordered ${errors.description ? "textarea-error" : ""}`}
-						value={formData.description}
-						onChange={(e) => setFormData((d) => ({ ...d, description: e.target.value }))}
+						id="program-description"
+						className={`textarea textarea-bordered w-full ${errors.description ? "textarea-error" : ""}`}
+						{...register("description")}
 						rows={4}
-						disabled={saving}
+						disabled={blockEdits}
+						aria-invalid={errors.description ? true : undefined}
+						aria-describedby={
+							errors.description ? "program-description-error" : undefined
+						}
 					/>
-					{errors.description && (
-						<span className="label-text-alt text-error">{errors.description}</span>
-					)}
-				</div>
+					{errors.description ? (
+						<p
+							id="program-description-error"
+							className="label text-error"
+							role="alert">
+							{errors.description.message}
+						</p>
+					) : null}
+				</fieldset>
 
-				<div className="form-control">
-					<label className="label">
-						<span className="label-text">Cover image</span>
-					</label>
-					<div
-						className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/50"
-						onClick={() => fileInputRef.current?.click()}
-					>
-						<input
-							ref={fileInputRef}
-							type="file"
-							accept="image/*"
-							className="hidden"
-							onChange={(e) => e.target.files?.[0] && handleCoverSelect(e.target.files[0])}
-						/>
-						{coverPreview ? (
-							<div className="relative aspect-video max-h-48 mx-auto rounded overflow-hidden">
-								<Image src={coverPreview} alt="Cover" fill className="object-contain" />
-								<button
-									type="button"
-									className="btn btn-sm btn-circle absolute top-1 right-1"
-									onClick={(ev) => {
-										ev.stopPropagation();
-										setCoverPreview(null);
-										setCoverFile(null);
-										setFormData((d) => ({ ...d, coverImageUrl: "" }));
-									}}
-								>
-									<XIcon className="w-4 h-4" />
-								</button>
-							</div>
-						) : (
-							<>
-								<UploadIcon className="w-12 h-12 mx-auto text-base-content/40" />
-								<p className="text-sm text-base-content/70 mt-2">Click to upload cover image</p>
-							</>
+				<fieldset className="fieldset w-full">
+					<legend className="fieldset-legend">Cover image</legend>
+					<Controller
+						name="coverImageUrl"
+						control={control}
+						render={({ field }) => (
+							<ProgramCoverUpload
+								value={field.value}
+								onChange={field.onChange}
+								disabled={saving}
+								onUploadingChange={setCoverUploading}
+							/>
 						)}
-					</div>
-				</div>
+					/>
+				</fieldset>
 
-				<div className="form-control">
-					<label className="label">
-						<span className="label-text">Payment instruction</span>
-					</label>
+				<fieldset className="fieldset w-full">
+					<legend className="fieldset-legend">Payment instruction</legend>
+					<p className="label">Optional</p>
 					<textarea
-						className="textarea textarea-bordered"
-						value={formData.paymentInstruction}
-						onChange={(e) => setFormData((d) => ({ ...d, paymentInstruction: e.target.value }))}
+						id="program-payment-instruction"
+						className="textarea textarea-bordered w-full"
+						{...register("paymentInstruction")}
 						rows={3}
 						placeholder="Instructions for payment..."
-						disabled={saving}
+						disabled={blockEdits}
 					/>
-				</div>
+				</fieldset>
 
-				<div className="form-control">
-					<label className="label">
-						<span className="label-text">Status</span>
-					</label>
+				<fieldset className="fieldset w-full">
+					<legend className="fieldset-legend">Status</legend>
 					<select
-						className="select select-bordered"
-						value={formData.status}
-						onChange={(e) => setFormData((d) => ({ ...d, status: e.target.value }))}
-						disabled={saving}
-					>
+						id="program-status"
+						className="select select-bordered w-full"
+						{...register("status")}
+						disabled={blockEdits}>
 						{STATUS_OPTIONS.map((s) => (
 							<option key={s} value={s}>
 								{s}
 							</option>
 						))}
 					</select>
-				</div>
+				</fieldset>
 
-				<div className="card-actions justify-end gap-2 pt-4">
+				<div className="card-actions justify-end gap-2 pt-2">
 					<button
 						type="button"
 						className="btn btn-ghost"
 						onClick={() => router.back()}
-						disabled={saving}
-					>
+						disabled={blockEdits}>
 						Cancel
 					</button>
-					<button type="submit" className="btn btn-primary" disabled={saving}>
-						{saving ? "Saving..." : program ? "Update" : "Create"}
+					<button type="submit" className="btn btn-primary" disabled={blockEdits}>
+						{saveMutation.isPending ? "Saving..." : program ? "Update" : "Create"}
 					</button>
 				</div>
 			</div>

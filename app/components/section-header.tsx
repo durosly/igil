@@ -53,6 +53,7 @@ function getPathInfo(path: string): PathInfo {
 			desc: "Browse and register for our programs",
 		};
 	}
+	return {
 		title: "Default",
 		linkInfo: "Default Page",
 		desc: "Default page is been displayed",

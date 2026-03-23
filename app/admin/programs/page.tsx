@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import connectDB from "@/lib/db";
+import { serializePrograms } from "@/lib/serialize-program";
 import Program from "@/models/Program";
 import Link from "next/link";
 import { Plus } from "lucide-react";
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 
 export default async function AdminProgramsPage() {
 	await connectDB();
-	const programs = await Program.find().sort({ createdAt: -1 }).lean();
+	const raw = await Program.find().sort({ createdAt: -1 }).lean();
+	const programs = serializePrograms(raw);
 
 	return (
 		<div>
