@@ -30,7 +30,13 @@ interface StudentDashboardClientProps {
 	programs: { _id: string; title: string }[];
 }
 
-async function fetchDashboard() {
+type DashboardData = {
+	enrollments: Enrollment[];
+	paymentCodes: PaymentCode[];
+	programs: { _id: string; title: string }[];
+};
+
+async function fetchDashboard(): Promise<DashboardData> {
 	const res = await fetch("/api/student/dashboard");
 	if (!res.ok) throw new Error("Failed to fetch");
 	return res.json();
@@ -45,7 +51,7 @@ export default function StudentDashboardClient({
 	paymentCodes: initialCodes,
 	programs: initialPrograms,
 }: StudentDashboardClientProps) {
-	const { data } = useQuery({
+	const { data } = useQuery<DashboardData>({
 		queryKey: ["student-dashboard"],
 		queryFn: fetchDashboard,
 		initialData: {
@@ -62,7 +68,14 @@ export default function StudentDashboardClient({
 	return (
 		<div className="space-y-8">
 			<section>
-				<h2 className="text-2xl font-semibold mb-4">My enrollments</h2>
+				<div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+					<h2 className="text-2xl font-semibold">My enrollments</h2>
+					{enrollments.length > 0 && (
+						<Link href="/student/enrollments" className="btn btn-outline btn-sm">
+							View all enrollments
+						</Link>
+					)}
+				</div>
 				{enrollments.length === 0 ? (
 					<div className="alert alert-info">
 						<span>You have not enrolled in any program yet.</span>

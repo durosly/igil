@@ -1,4 +1,4 @@
-import { LayoutDashboard, BookOpen, Award, Settings, Menu, X } from "lucide-react";
+import { LayoutDashboard, BookOpen, Award, Settings, Menu, X, ClipboardList } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -46,6 +46,12 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
 							<Link href="/student/dashboard" className="flex items-center gap-3">
 								<LayoutDashboard className="w-5 h-5" />
 								Dashboard
+							</Link>
+						</li>
+						<li>
+							<Link href="/student/enrollments" className="flex items-center gap-3">
+								<ClipboardList className="w-5 h-5" />
+								Enrollments
 							</Link>
 						</li>
 						<li>
