@@ -76,7 +76,8 @@ async function migrateCollection(
 	const docs = await cursor.toArray();
 
 	let updated = 0;
-	const ops: Parameters<typeof coll.bulkWrite>[0] = [];
+	type BulkWriteOp = Parameters<typeof coll.bulkWrite>[0][number];
+	const ops: BulkWriteOp[] = [];
 
 	for (const doc of docs) {
 		const $set = collectUpdates(doc, spec.fields);

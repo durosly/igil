@@ -55,12 +55,12 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const { data: newUser, error: createError } = await auth.api.createUser({
+		const createResult = await auth.api.createUser({
 			body: {
 				email: String(email).trim(),
 				name: String(name).trim(),
 				password: String(password),
-				role: "student",
+				role: "user",
 				data: {
 					mustChangePassword: true,
 					profileApproved: false,
@@ -68,10 +68,11 @@ export async function POST(request: NextRequest) {
 			},
 			headers: request.headers,
 		});
+		const newUser = createResult?.user;
 
-		if (createError || !newUser) {
+		if (!newUser) {
 			return NextResponse.json(
-				{ error: (createError as { message?: string })?.message ?? "Failed to create user" },
+				{ error: "Failed to create user" },
 				{ status: 400 }
 			);
 		}
