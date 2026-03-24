@@ -3,6 +3,7 @@ import "server-only";
 import { Types } from "mongoose";
 import { auth } from "@/lib/auth";
 import connectDB from "@/lib/db";
+import Certificate from "@/models/Certificate";
 import Enrollment from "@/models/Enrollment";
 import PaymentCode from "@/models/PaymentCode";
 
@@ -32,6 +33,17 @@ export type StudentPaymentCodeRow = {
 	createdAt?: string;
 };
 
+export type StudentCertificateSummary = {
+	_id: string;
+	completedAt: string;
+	documentUrl?: string;
+	certificateNumber?: string;
+	issuedAt?: string;
+	originalFileName?: string;
+	downloadCount: number;
+	lastUnlockUntil?: string;
+};
+
 export type StudentEnrollmentDetail = {
 	_id: string;
 	source: string;
@@ -44,6 +56,7 @@ export type StudentEnrollmentDetail = {
 	program: StudentEnrollmentProgram | null;
 	session?: StudentEnrollmentSession;
 	paymentCodes: StudentPaymentCodeRow[];
+	certificate: StudentCertificateSummary | null;
 };
 
 export type GetEnrollmentForStudentResult =
@@ -145,6 +158,28 @@ export async function getEnrollmentForStudent(
 			createdAt: pc.createdAt ? new Date(pc.createdAt).toISOString() : undefined,
 		}));
 
+		let certificate: StudentCertificateSummary | null = null;
+		if (Types.ObjectId.isValid(programMongoId)) {
+			const certDoc = await Certificate.findOne({
+				userId,
+				programId: new Types.ObjectId(programMongoId),
+			} as never).lean();
+			if (certDoc) {
+				certificate = {
+					_id: String(certDoc._id),
+					completedAt: new Date(certDoc.completedAt).toISOString(),
+					documentUrl: certDoc.documentUrl,
+					certificateNumber: certDoc.certificateNumber,
+					issuedAt: certDoc.issuedAt ? new Date(certDoc.issuedAt).toISOString() : undefined,
+					originalFileName: certDoc.originalFileName,
+					downloadCount: certDoc.downloadCount ?? 0,
+					lastUnlockUntil: certDoc.lastUnlockUntil
+						? new Date(certDoc.lastUnlockUntil).toISOString()
+						: undefined,
+				};
+			}
+		}
+
 		return {
 			ok: true,
 			enrollment: {
@@ -159,6 +194,7 @@ export async function getEnrollmentForStudent(
 				program,
 				session: mapSession(e.sessionId),
 				paymentCodes,
+				certificate,
 			},
 		};
 	} catch (error) {

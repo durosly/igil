@@ -36,19 +36,43 @@ export async function GET(
 			);
 		}
 
+		const documentUrl = (cert as { documentUrl?: string }).documentUrl;
+		if (!documentUrl) {
+			return NextResponse.json(
+				{ error: "Certificate document has not been uploaded yet." },
+				{ status: 404 }
+			);
+		}
+
+		let upstream: Response;
+		try {
+			upstream = await fetch(documentUrl, { cache: "no-store" });
+		} catch {
+			return NextResponse.json({ error: "Failed to retrieve certificate file" }, { status: 502 });
+		}
+		if (!upstream.ok) {
+			return NextResponse.json({ error: "Certificate file unavailable" }, { status: 502 });
+		}
+
+		const buf = await upstream.arrayBuffer();
 		await Certificate.findByIdAndUpdate(id, { $inc: { downloadCount: 1 } });
 
-		// Placeholder: return a simple HTML page or redirect to a static placeholder PDF
-		// In production you would generate or serve the actual certificate file
-		return new NextResponse(
-			"<html><body><p>Certificate download would be served here. Configure certificate file storage or generation.</p></body></html>",
-			{
-				headers: {
-					"Content-Type": "text/html",
-					"Content-Disposition": "inline",
-				},
-			}
-		);
+		const rawName = (cert as { originalFileName?: string }).originalFileName;
+		const fileName =
+			rawName && rawName.trim().length > 0
+				? rawName.replace(/["\r\n]/g, "_").slice(0, 200)
+				: "certificate";
+		const contentType =
+			(cert as { contentType?: string }).contentType ||
+			upstream.headers.get("content-type") ||
+			"application/octet-stream";
+
+		return new NextResponse(buf, {
+			headers: {
+				"Content-Type": contentType,
+				"Content-Disposition": `attachment; filename="${fileName}"`,
+			},
+		});
 	} catch (error) {
 		console.error("Error downloading certificate:", error);
 		return NextResponse.json({ error: "Failed to download" }, { status: 500 });

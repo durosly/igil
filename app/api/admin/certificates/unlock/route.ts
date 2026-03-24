@@ -30,19 +30,24 @@ export async function POST(request: NextRequest) {
 		const completed = completedAt ? new Date(completedAt) : now;
 
 		if (cert) {
+			cert.sessionId = sessionId;
+			cert.completedAt = completed;
 			if (unlockHours) {
 				cert.lastUnlockUntil = addHours(now, unlockHours);
-				await cert.save();
 			}
+			await cert.save();
 		} else {
-			cert = await Certificate.create({
-				userId,
-				programId,
-				sessionId,
-				completedAt: completed,
-				downloadCount: 0,
-				...(unlockHours && { lastUnlockUntil: addHours(now, unlockHours) }),
-			});
+			const [created] = await Certificate.create([
+				{
+					userId,
+					programId,
+					sessionId,
+					completedAt: completed,
+					downloadCount: 0,
+					...(unlockHours && { lastUnlockUntil: addHours(now, unlockHours) }),
+				},
+			]);
+			cert = created;
 		}
 
 		return NextResponse.json(cert);

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { format } from "date-fns";
+import { format, isAfter } from "date-fns";
 import { headers } from "next/headers";
 import { getEnrollmentForStudent } from "@/lib/student/get-enrollment-for-student";
 
@@ -30,6 +30,11 @@ export default async function StudentEnrollmentDetailPage({ params }: Props) {
 
 	const { enrollment: e } = result;
 	const program = e.program;
+	const cert = e.certificate;
+	const canDownloadCert =
+		cert &&
+		(cert.downloadCount === 0 ||
+			(cert.lastUnlockUntil && isAfter(new Date(cert.lastUnlockUntil), new Date())));
 
 	return (
 		<div className="space-y-8 max-w-3xl">
@@ -89,6 +94,43 @@ export default async function StudentEnrollmentDetailPage({ params }: Props) {
 					)}
 				</div>
 			</section>
+
+			{e.completedAt && cert && (
+				<section className="space-y-3 rounded-lg border border-base-300 bg-base-200/50 p-4">
+					<h2 className="text-xl font-semibold">Certificate</h2>
+					{cert.certificateNumber && (
+						<p className="text-sm">
+							<span className="text-base-content/60">Certificate number: </span>
+							<span className="font-medium">{cert.certificateNumber}</span>
+						</p>
+					)}
+					<p className="text-sm text-base-content/70">
+						{cert.issuedAt
+							? `Issued ${format(new Date(cert.issuedAt), "PP")}`
+							: `Completed ${format(new Date(cert.completedAt), "PP")}`}
+					</p>
+					{cert.documentUrl ? (
+						canDownloadCert ? (
+							<a
+								href={`/api/student/certificates/${cert._id}/download`}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="btn btn-primary btn-sm"
+							>
+								Download certificate
+							</a>
+						) : (
+							<p className="text-sm text-base-content/60">
+								Re-download requires payment. Contact the office to unlock.
+							</p>
+						)
+					) : (
+						<p className="text-sm text-base-content/60">
+							Your certificate document is not available yet. Check back soon or contact the office.
+						</p>
+					)}
+				</section>
+			)}
 
 			{program?.description && (
 				<section className="space-y-2">

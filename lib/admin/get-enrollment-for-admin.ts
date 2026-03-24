@@ -1,10 +1,26 @@
 import "server-only";
 
+import { Types } from "mongoose";
 import { auth } from "@/lib/auth";
 import { betterAuthUserIdFilter } from "@/lib/admin/better-auth-user-filter";
 import connectDB from "@/lib/db";
 import { getClient } from "@/lib/db";
 import Enrollment from "@/models/Enrollment";
+import Certificate from "@/models/Certificate";
+
+export type AdminCertificateSummary = {
+	_id: string;
+	completedAt: string;
+	sessionId?: string;
+	documentUrl?: string;
+	storageKey?: string;
+	contentType?: string;
+	originalFileName?: string;
+	certificateNumber?: string;
+	issuedAt?: string;
+	downloadCount: number;
+	lastUnlockUntil?: string;
+};
 
 export type AdminEnrollmentDetail = {
 	_id: string;
@@ -19,6 +35,8 @@ export type AdminEnrollmentDetail = {
 	profileApproved: boolean;
 	programApproved: boolean;
 	paymentApproved: boolean;
+	completedAt?: string;
+	certificate: AdminCertificateSummary | null;
 	createdAt?: string;
 	updatedAt?: string;
 };
@@ -76,6 +94,31 @@ export async function getEnrollmentForAdmin(
 		const prog = programTitle(e.programId);
 		const sess = sessionLabel(e.sessionId);
 
+		let certificate: AdminCertificateSummary | null = null;
+		if (Types.ObjectId.isValid(prog.id)) {
+			const certDoc = await Certificate.findOne({
+				userId: e.userId,
+				programId: new Types.ObjectId(prog.id),
+			} as never).lean();
+			if (certDoc) {
+				certificate = {
+					_id: String(certDoc._id),
+					completedAt: new Date(certDoc.completedAt).toISOString(),
+					sessionId: certDoc.sessionId ? String(certDoc.sessionId) : undefined,
+					documentUrl: certDoc.documentUrl,
+					storageKey: certDoc.storageKey,
+					contentType: certDoc.contentType,
+					originalFileName: certDoc.originalFileName,
+					certificateNumber: certDoc.certificateNumber,
+					issuedAt: certDoc.issuedAt ? new Date(certDoc.issuedAt).toISOString() : undefined,
+					downloadCount: certDoc.downloadCount ?? 0,
+					lastUnlockUntil: certDoc.lastUnlockUntil
+						? new Date(certDoc.lastUnlockUntil).toISOString()
+						: undefined,
+				};
+			}
+		}
+
 		return {
 			ok: true,
 			enrollment: {
@@ -91,6 +134,8 @@ export async function getEnrollmentForAdmin(
 				profileApproved: e.profileApproved,
 				programApproved: e.programApproved,
 				paymentApproved: e.paymentApproved,
+				completedAt: e.completedAt ? new Date(e.completedAt).toISOString() : undefined,
+				certificate,
 				createdAt: e.createdAt ? new Date(e.createdAt).toISOString() : undefined,
 				updatedAt: e.updatedAt ? new Date(e.updatedAt).toISOString() : undefined,
 			},

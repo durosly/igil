@@ -4,6 +4,10 @@ import connectDB from "@/lib/db";
 import Enrollment from "@/models/Enrollment";
 import ProgramSession from "@/models/ProgramSession";
 import { getEnrollmentForAdmin } from "@/lib/admin/get-enrollment-for-admin";
+import {
+	syncCertificateForEnrollment,
+	SyncCertificateError,
+} from "@/lib/admin/sync-certificate-for-enrollment";
 
 export async function GET(
 	request: NextRequest,
@@ -32,14 +36,16 @@ export async function PATCH(
 
 		const { id } = await params;
 		const body = await request.json();
-		const { profileApproved, programApproved, paymentApproved, sessionId } = body;
+		const { profileApproved, programApproved, paymentApproved, sessionId, completedAt } = body;
 
 		const hasSessionKey = Object.prototype.hasOwnProperty.call(body, "sessionId");
+		const hasCompletedAtKey = Object.prototype.hasOwnProperty.call(body, "completedAt");
 		if (
 			profileApproved === undefined &&
 			programApproved === undefined &&
 			paymentApproved === undefined &&
-			!hasSessionKey
+			!hasSessionKey &&
+			!hasCompletedAtKey
 		) {
 			return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
 		}
@@ -50,12 +56,60 @@ export async function PATCH(
 			return NextResponse.json({ error: "Enrollment not found" }, { status: 404 });
 		}
 
+		let nextCompletedAt: Date | null = enrollment.completedAt
+			? new Date(enrollment.completedAt)
+			: null;
+		if (hasCompletedAtKey) {
+			if (completedAt === null || completedAt === "") {
+				nextCompletedAt = null;
+			} else {
+				const d = new Date(completedAt);
+				if (Number.isNaN(d.getTime())) {
+					return NextResponse.json({ error: "Invalid completedAt date" }, { status: 400 });
+				}
+				nextCompletedAt = d;
+			}
+		}
+
+		const completedAfterUpdate: Date | null = hasCompletedAtKey
+			? nextCompletedAt
+			: enrollment.completedAt
+				? new Date(enrollment.completedAt)
+				: null;
+
+		let sessionAfterUpdate = !!enrollment.sessionId;
+		if (hasSessionKey) {
+			sessionAfterUpdate = !(sessionId == null || sessionId === "");
+		}
+
+		if (hasSessionKey && (sessionId == null || sessionId === "") && completedAfterUpdate) {
+			return NextResponse.json(
+				{ error: "Clear completion before removing the session" },
+				{ status: 400 }
+			);
+		}
+
+		if (completedAfterUpdate && !sessionAfterUpdate) {
+			return NextResponse.json(
+				{ error: "Assign a session before marking the enrollment complete" },
+				{ status: 400 }
+			);
+		}
+
 		const $set: Record<string, unknown> = {};
 		const $unset: Record<string, "" | 1> = {};
 
 		if (profileApproved !== undefined) $set.profileApproved = !!profileApproved;
 		if (programApproved !== undefined) $set.programApproved = !!programApproved;
 		if (paymentApproved !== undefined) $set.paymentApproved = !!paymentApproved;
+
+		if (hasCompletedAtKey) {
+			if (nextCompletedAt) {
+				$set.completedAt = nextCompletedAt;
+			} else {
+				$unset.completedAt = "";
+			}
+		}
 
 		if (hasSessionKey) {
 			if (sessionId == null || sessionId === "") {
@@ -87,6 +141,19 @@ export async function PATCH(
 			.populate("programId", "title")
 			.populate("sessionId", "title year")
 			.lean();
+
+		if (!updated) {
+			return NextResponse.json({ error: "Enrollment not found" }, { status: 404 });
+		}
+
+		try {
+			await syncCertificateForEnrollment(updated);
+		} catch (err) {
+			if (err instanceof SyncCertificateError) {
+				return NextResponse.json({ error: err.message }, { status: 400 });
+			}
+			throw err;
+		}
 
 		return NextResponse.json(updated);
 	} catch (error) {

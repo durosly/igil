@@ -13,6 +13,9 @@ interface CertItem {
 	completedAt: string;
 	downloadCount: number;
 	lastUnlockUntil?: string;
+	documentUrl?: string;
+	certificateNumber?: string;
+	issuedAt?: string;
 }
 
 interface CertificatesManagerProps {
@@ -68,6 +71,8 @@ export default function CertificatesManager({ initialCertificates }: Certificate
 						<th>User ID</th>
 						<th>Program</th>
 						<th>Session</th>
+						<th>Cert #</th>
+						<th>Document</th>
 						<th>Downloads</th>
 						<th>Unlocked until</th>
 						<th>Action</th>
@@ -79,6 +84,16 @@ export default function CertificatesManager({ initialCertificates }: Certificate
 							<td className="font-mono text-sm">{c.userId}</td>
 							<td>{programTitle(c.programId)}</td>
 							<td>{sessionTitle(c.sessionId)}</td>
+							<td className="text-sm">{c.certificateNumber ?? "—"}</td>
+							<td className="text-sm">
+								{c.documentUrl ? (
+									<a href={c.documentUrl} target="_blank" rel="noopener noreferrer" className="link link-primary">
+										File
+									</a>
+								) : (
+									"—"
+								)}
+							</td>
 							<td>{c.downloadCount}</td>
 							<td>
 								{c.lastUnlockUntil

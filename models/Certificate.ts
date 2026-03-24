@@ -8,6 +8,12 @@ export interface ICertificate {
 	completedAt: Date;
 	downloadCount: number;
 	lastUnlockUntil?: Date;
+	documentUrl?: string;
+	storageKey?: string;
+	contentType?: string;
+	originalFileName?: string;
+	certificateNumber?: string;
+	issuedAt?: Date;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -39,6 +45,12 @@ const CertificateSchema = new Schema<ICertificate>(
 		lastUnlockUntil: {
 			type: Date,
 		},
+		documentUrl: { type: String },
+		storageKey: { type: String },
+		contentType: { type: String },
+		originalFileName: { type: String },
+		certificateNumber: { type: String },
+		issuedAt: { type: Date },
 	},
 	{
 		timestamps: true,

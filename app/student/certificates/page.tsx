@@ -3,7 +3,6 @@ import connectDB from "@/lib/db";
 import Certificate from "@/models/Certificate";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { addHours, isAfter } from "date-fns";
 import CertificatesList from "./__components/certificates-list";
 
 export const metadata: Metadata = {

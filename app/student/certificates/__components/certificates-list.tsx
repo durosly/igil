@@ -11,6 +11,9 @@ interface Cert {
 	completedAt: string;
 	downloadCount: number;
 	lastUnlockUntil?: string;
+	documentUrl?: string;
+	certificateNumber?: string;
+	issuedAt?: string;
 }
 
 interface CertificatesListProps {
@@ -57,9 +60,22 @@ export default function CertificatesList({ certificates: initial }: Certificates
 									{typeof c.sessionId === "object" ? `${c.sessionId.title} (${c.sessionId.year})` : ""} – completed{" "}
 									{format(new Date(c.completedAt), "PP")}
 								</p>
+								{c.certificateNumber && (
+									<p className="text-sm text-base-content/80">Number: {c.certificateNumber}</p>
+								)}
+								{c.issuedAt && (
+									<p className="text-xs text-base-content/60">
+										Issued {format(new Date(c.issuedAt), "PP")}
+									</p>
+								)}
 								<p className="text-xs text-base-content/60">Downloads: {c.downloadCount}</p>
+								{!c.documentUrl && (
+									<p className="text-xs text-warning mt-1">Document not uploaded yet.</p>
+								)}
 							</div>
-							{canDownload(c) ? (
+							{!c.documentUrl ? (
+								<span className="text-sm text-base-content/60">Not available yet</span>
+							) : canDownload(c) ? (
 								<a
 									href={`/api/student/certificates/${c._id}/download`}
 									target="_blank"
