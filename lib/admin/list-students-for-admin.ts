@@ -1,5 +1,6 @@
 import "server-only";
 
+import { Types } from "mongoose";
 import { auth } from "@/lib/auth";
 import connectDB from "@/lib/db";
 import Enrollment from "@/models/Enrollment";
@@ -23,8 +24,21 @@ export type AdminStudentListItem = {
 	}[];
 };
 
+const STUDENT_USER_LIST_LIMIT = 500;
+
+export type ListStudentsForAdminOptions = {
+	page?: number;
+	pageSize?: number;
+	/** Substring match on name or email (case-insensitive). */
+	q?: string;
+	/** Filter by profile approval. */
+	profileApproved?: "yes" | "no";
+	/** Student has at least one enrollment in this program (Mongo ObjectId string). */
+	programId?: string;
+};
+
 export type ListStudentsForAdminResult =
-	| { ok: true; students: AdminStudentListItem[] }
+	| { ok: true; students: AdminStudentListItem[]; total: number; page: number; pageSize: number }
 	| { ok: false; status: 401 | 403 | 500; error: string };
 
 function serializeEnrollments(
@@ -51,7 +65,10 @@ function serializeEnrollments(
 	}));
 }
 
-export async function listStudentsForAdmin(requestHeaders: Headers): Promise<ListStudentsForAdminResult> {
+export async function listStudentsForAdmin(
+	requestHeaders: Headers,
+	options: ListStudentsForAdminOptions = {}
+): Promise<ListStudentsForAdminResult> {
 	try {
 		const session = await auth.api.getSession({ headers: requestHeaders });
 		if (!session?.user) {
@@ -61,12 +78,15 @@ export async function listStudentsForAdmin(requestHeaders: Headers): Promise<Lis
 			return { ok: false, status: 403, error: "Forbidden" };
 		}
 
+		const page = Math.max(1, Math.floor(options.page ?? 1));
+		const pageSize = Math.min(100, Math.max(1, Math.floor(options.pageSize ?? 20)));
+
 		const listResponse = await auth.api.listUsers({
 			query: {
 				filterField: "role",
 				filterValue: "student",
 				filterOperator: "eq",
-				limit: 500,
+				limit: STUDENT_USER_LIST_LIMIT,
 			},
 			headers: requestHeaders,
 		});
@@ -82,7 +102,7 @@ export async function listStudentsForAdmin(requestHeaders: Headers): Promise<Lis
 			byUser.set(e.userId, list);
 		}
 
-		const students: AdminStudentListItem[] = users.map((u) => ({
+		let rows: AdminStudentListItem[] = users.map((u) => ({
 			id: u.id,
 			name: u.name,
 			email: u.email,
@@ -91,7 +111,31 @@ export async function listStudentsForAdmin(requestHeaders: Headers): Promise<Lis
 			enrollments: serializeEnrollments(byUser.get(u.id) ?? []),
 		}));
 
-		return { ok: true, students };
+		const q = options.q?.trim().toLowerCase();
+		if (q) {
+			rows = rows.filter(
+				(s) =>
+					(s.name?.toLowerCase().includes(q) ?? false) ||
+					(s.email?.toLowerCase().includes(q) ?? false)
+			);
+		}
+
+		if (options.profileApproved === "yes") {
+			rows = rows.filter((s) => s.profileApproved === true);
+		} else if (options.profileApproved === "no") {
+			rows = rows.filter((s) => !s.profileApproved);
+		}
+
+		if (options.programId && Types.ObjectId.isValid(options.programId)) {
+			const pid = options.programId;
+			rows = rows.filter((s) => s.enrollments.some((e) => e.programId === pid));
+		}
+
+		const total = rows.length;
+		const start = (page - 1) * pageSize;
+		const students = rows.slice(start, start + pageSize);
+
+		return { ok: true, students, total, page, pageSize };
 	} catch (error) {
 		console.error("Error listing students:", error);
 		return { ok: false, status: 500, error: "Failed to list students" };

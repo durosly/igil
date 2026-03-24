@@ -8,11 +8,31 @@ import { listStudentsForAdmin } from "@/lib/admin/list-students-for-admin";
 const baseURL = process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
 export async function GET(request: NextRequest) {
-	const result = await listStudentsForAdmin(request.headers);
+	const { searchParams } = request.nextUrl;
+	const page = searchParams.get("page");
+	const pageSize = searchParams.get("pageSize");
+	const q = searchParams.get("q") ?? undefined;
+	const rawProfile = searchParams.get("profileApproved");
+	const profileApproved =
+		rawProfile === "yes" || rawProfile === "no" ? rawProfile : undefined;
+	const programId = searchParams.get("programId") || undefined;
+
+	const result = await listStudentsForAdmin(request.headers, {
+		page: page ? Number(page) : undefined,
+		pageSize: pageSize ? Number(pageSize) : undefined,
+		q: q || undefined,
+		profileApproved,
+		programId,
+	});
 	if (!result.ok) {
 		return NextResponse.json({ error: result.error }, { status: result.status });
 	}
-	return NextResponse.json(result.students);
+	return NextResponse.json({
+		students: result.students,
+		total: result.total,
+		page: result.page,
+		pageSize: result.pageSize,
+	});
 }
 
 export async function POST(request: NextRequest) {

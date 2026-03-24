@@ -14,13 +14,18 @@ export const metadata: Metadata = {
 export default async function AdminStudentsPage() {
 	await connectDB();
 	const headersList = await headers();
-	const result = await listStudentsForAdmin(headersList);
+	const result = await listStudentsForAdmin(headersList, { page: 1, pageSize: 20 });
 	if (!result.ok) {
 		if (result.status === 401) redirect("/login");
 		if (result.status === 403) redirect("/");
 		throw new Error(result.error);
 	}
-	const students = result.students;
+	const initialPayload = {
+		students: JSON.parse(JSON.stringify(result.students)),
+		total: result.total,
+		page: result.page,
+		pageSize: result.pageSize,
+	};
 	const programsRaw = await Program.find().select("_id title").sort({ title: 1 }).lean();
 	const programs = programsRaw.map((p) => ({
 		_id: String(p._id),
@@ -30,7 +35,7 @@ export default async function AdminStudentsPage() {
 	return (
 		<div>
 			<h1 className="text-4xl font-bold mb-6">Students</h1>
-			<StudentsManager initialStudents={students} programs={programs} />
+			<StudentsManager initialPayload={initialPayload} programs={programs} />
 		</div>
 	);
 }
