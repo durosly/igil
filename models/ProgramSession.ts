@@ -5,7 +5,6 @@ export interface IProgramSession {
 	programId: Schema.Types.ObjectId;
 	year: number;
 	title: string;
-	studentIds: string[];
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -26,10 +25,6 @@ const ProgramSessionSchema = new Schema<IProgramSession>(
 			required: [true, "Title is required"],
 			trim: true,
 			maxlength: [200, "Title cannot exceed 200 characters"],
-		},
-		studentIds: {
-			type: [String],
-			default: [],
 		},
 	},
 	{

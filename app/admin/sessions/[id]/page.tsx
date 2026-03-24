@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import connectDB from "@/lib/db";
+import connectDB, { getClient } from "@/lib/db";
+import {
+	betterAuthUserDocumentId,
+	betterAuthUserIdFilter,
+} from "@/lib/admin/better-auth-user-filter";
 import ProgramSession from "@/models/ProgramSession";
 import Enrollment from "@/models/Enrollment";
+import type { IEnrollment } from "@/models/Enrollment";
+import { Types } from "mongoose";
 import { notFound } from "next/navigation";
 import SessionStudentsManager from "../__components/session-students-manager";
 
@@ -20,19 +26,64 @@ export default async function SessionDetailPage({
 	const session = await ProgramSession.findById(id).populate("programId", "title").lean();
 	if (!session) notFound();
 
-	const programId = typeof session.programId === "object" && session.programId !== null
-		? (session.programId as { _id: string })._id
-		: String(session.programId);
+	const rawProgramId = session.programId;
+	const programId =
+		typeof rawProgramId === "object" &&
+		rawProgramId !== null &&
+		"_id" in rawProgramId
+			? String((rawProgramId as { _id: unknown })._id)
+			: String(rawProgramId);
+
+	const programObjectId = new Types.ObjectId(programId);
+	const sessionObjectId = new Types.ObjectId(id);
 
 	const enrollments = await Enrollment.find({
-		programId,
-		$or: [{ sessionId: id }, { sessionId: null }],
-	})
-		.lean();
+		programId: programObjectId as unknown as IEnrollment["programId"],
+		$or: [
+			{
+				sessionId: sessionObjectId as unknown as NonNullable<
+					IEnrollment["sessionId"]
+				>,
+			},
+			{ sessionId: null },
+		],
+	}).lean();
 
-	const programTitle = typeof session.programId === "object" && session.programId !== null
-		? (session.programId as { title: string }).title
-		: "Program";
+	const uniqueUserIds = [...new Set(enrollments.map((e) => e.userId))];
+	const db = await getClient();
+	const userDocs =
+		uniqueUserIds.length > 0
+			? await db
+					.collection("user")
+					.find({ $or: uniqueUserIds.map((uid) => betterAuthUserIdFilter(uid)) })
+					.project<{ id?: string; _id?: unknown; name?: string; email?: string }>({
+						name: 1,
+						email: 1,
+						id: 1,
+					})
+					.toArray()
+			: [];
+
+	const displayNameByUserId = new Map<string, string>();
+	for (const doc of userDocs) {
+		const label =
+			doc.name?.trim() || doc.email?.trim() || "—";
+		const resolved = betterAuthUserDocumentId(doc);
+		if (resolved) displayNameByUserId.set(resolved, label);
+		if (typeof doc.id === "string" && doc.id) displayNameByUserId.set(doc.id, label);
+	}
+
+	const programTitle =
+		typeof session.programId === "object" &&
+		session.programId !== null &&
+		"title" in session.programId
+			? String((session.programId as { title: unknown }).title)
+			: "Program";
+
+	const initialMembershipUserIds = (await Enrollment.distinct("userId", {
+		programId: programObjectId as unknown as IEnrollment["programId"],
+		sessionId: sessionObjectId as unknown as NonNullable<IEnrollment["sessionId"]>,
+	} as never)) as string[];
 
 	return (
 		<div>
@@ -42,11 +93,11 @@ export default async function SessionDetailPage({
 			<p className="text-base-content/70 mb-6">Year: {session.year}</p>
 			<SessionStudentsManager
 				sessionId={String(session._id)}
-				programId={programId}
-				initialStudentIds={session.studentIds ?? []}
+				initialMembershipUserIds={initialMembershipUserIds}
 				enrollments={enrollments.map((e) => ({
 					_id: String(e._id),
 					userId: e.userId,
+					userName: displayNameByUserId.get(e.userId) ?? "—",
 					programApproved: e.programApproved,
 				}))}
 			/>

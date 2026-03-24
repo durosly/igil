@@ -16,7 +16,7 @@ interface Session {
 	programId: ProgramRef | string;
 	year: number;
 	title: string;
-	studentIds: string[];
+	studentCount?: number;
 }
 
 interface SessionsManagerProps {
@@ -117,7 +117,7 @@ export default function SessionsManager({ initialSessions, programs }: SessionsM
 								<td>{programTitle(s)}</td>
 								<td>{s.year}</td>
 								<td>{s.title}</td>
-								<td>{s.studentIds?.length ?? 0}</td>
+								<td>{s.studentCount ?? 0}</td>
 								<td>
 									<Link
 										href={`/admin/sessions/${s._id}`}

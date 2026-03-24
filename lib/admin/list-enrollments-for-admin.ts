@@ -28,6 +28,8 @@ export type ListEnrollmentsForAdminOptions = {
 	page?: number;
 	pageSize?: number;
 	programId?: string;
+	/** Program session ObjectId string, or `"none"` for enrollments with no session */
+	sessionId?: string;
 	source?: string;
 	q?: string;
 };
@@ -124,6 +126,11 @@ export async function listEnrollmentsForAdmin(
 		const mongoFilter: Record<string, unknown> = {};
 		if (options.programId && Types.ObjectId.isValid(options.programId)) {
 			mongoFilter.programId = new Types.ObjectId(options.programId);
+		}
+		if (options.sessionId === "none") {
+			mongoFilter.sessionId = null;
+		} else if (options.sessionId && Types.ObjectId.isValid(options.sessionId)) {
+			mongoFilter.sessionId = new Types.ObjectId(options.sessionId);
 		}
 		if (options.source === "invited" || options.source === "self") {
 			mongoFilter.source = options.source;

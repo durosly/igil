@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import connectDB from "@/lib/db";
 import Program from "@/models/Program";
+import ProgramSession from "@/models/ProgramSession";
 import { listEnrollmentsForAdmin } from "@/lib/admin/list-enrollments-for-admin";
 import EnrollmentsManager from "./__components/enrollments-manager";
 
@@ -27,6 +28,17 @@ export default async function AdminEnrollmentsPage() {
 		title: String(p.title ?? ""),
 	}));
 
+	const sessionsRaw = await ProgramSession.find()
+		.select("_id title year programId")
+		.sort({ year: -1, title: 1 })
+		.lean();
+	const sessions = sessionsRaw.map((s) => ({
+		_id: String(s._id),
+		title: String(s.title ?? ""),
+		year: s.year,
+		programId: String(s.programId),
+	}));
+
 	const initialPayload = {
 		enrollments: JSON.parse(JSON.stringify(result.enrollments)),
 		total: result.total,
@@ -37,7 +49,11 @@ export default async function AdminEnrollmentsPage() {
 	return (
 		<div>
 			<h1 className="text-4xl font-bold mb-6">Enrollments</h1>
-			<EnrollmentsManager initialPayload={initialPayload} programs={programs} />
+			<EnrollmentsManager
+				initialPayload={initialPayload}
+				programs={programs}
+				sessions={sessions}
+			/>
 		</div>
 	);
 }

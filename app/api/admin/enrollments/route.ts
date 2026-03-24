@@ -6,6 +6,13 @@ export async function GET(request: NextRequest) {
 	const page = searchParams.get("page");
 	const pageSize = searchParams.get("pageSize");
 	const programId = searchParams.get("programId") ?? undefined;
+	const rawSession = searchParams.get("sessionId");
+	const sessionId =
+		rawSession === "none"
+			? "none"
+			: rawSession && rawSession.length > 0
+				? rawSession
+				: undefined;
 	const rawSource = searchParams.get("source");
 	const source =
 		rawSource === "invited" || rawSource === "self" ? rawSource : undefined;
@@ -15,6 +22,7 @@ export async function GET(request: NextRequest) {
 		page: page ? Number(page) : undefined,
 		pageSize: pageSize ? Number(pageSize) : undefined,
 		programId: programId || undefined,
+		sessionId,
 		source,
 		q: q || undefined,
 	});

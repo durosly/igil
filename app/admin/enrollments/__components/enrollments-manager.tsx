@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export interface AdminEnrollmentRow {
 	_id: string;
@@ -34,9 +34,17 @@ interface ProgramOption {
 	title: string;
 }
 
+interface SessionOption {
+	_id: string;
+	title: string;
+	year: number;
+	programId: string;
+}
+
 interface EnrollmentsManagerProps {
 	initialPayload: EnrollmentsListPayload;
 	programs: ProgramOption[];
+	sessions: SessionOption[];
 }
 
 function OkBadge({ ok }: { ok: boolean }) {
@@ -47,12 +55,28 @@ function OkBadge({ ok }: { ok: boolean }) {
 	);
 }
 
-export default function EnrollmentsManager({ initialPayload, programs }: EnrollmentsManagerProps) {
+export default function EnrollmentsManager({
+	initialPayload,
+	programs,
+	sessions,
+}: EnrollmentsManagerProps) {
 	const [page, setPage] = useState(initialPayload.page);
 	const [programId, setProgramId] = useState("");
+	const [sessionFilter, setSessionFilter] = useState<"" | "none" | string>("");
 	const [source, setSource] = useState<"" | "invited" | "self">("");
 	const [qInput, setQInput] = useState("");
 	const [debouncedQ, setDebouncedQ] = useState("");
+
+	const programTitleById = useMemo(() => {
+		const m = new Map<string, string>();
+		for (const p of programs) m.set(p._id, p.title);
+		return m;
+	}, [programs]);
+
+	const sessionOptions = useMemo(() => {
+		if (!programId) return sessions;
+		return sessions.filter((s) => s.programId === programId);
+	}, [sessions, programId]);
 
 	useEffect(() => {
 		const t = setTimeout(() => setDebouncedQ(qInput.trim()), 400);
@@ -61,24 +85,44 @@ export default function EnrollmentsManager({ initialPayload, programs }: Enrollm
 
 	useEffect(() => {
 		setPage(1);
-	}, [programId, source, debouncedQ]);
+	}, [programId, sessionFilter, source, debouncedQ]);
+
+	useEffect(() => {
+		if (!sessionFilter || sessionFilter === "none") return;
+		const ok = sessionOptions.some((s) => s._id === sessionFilter);
+		if (!ok) setSessionFilter("");
+	}, [programId, sessionFilter, sessionOptions]);
 
 	const pageSize = initialPayload.pageSize;
 
 	const isInitialQuery =
 		page === initialPayload.page &&
 		programId === "" &&
+		sessionFilter === "" &&
 		source === "" &&
 		debouncedQ === "";
 
 	const { data } = useQuery({
-		queryKey: ["admin-enrollments", page, pageSize, programId, source, debouncedQ],
+		queryKey: [
+			"admin-enrollments",
+			page,
+			pageSize,
+			programId,
+			sessionFilter,
+			source,
+			debouncedQ,
+		],
 		queryFn: async () => {
 			const { data: payload } = await axios.get<EnrollmentsListPayload>("/api/admin/enrollments", {
 				params: {
 					page,
 					pageSize,
 					...(programId ? { programId } : {}),
+					...(sessionFilter === "none"
+						? { sessionId: "none" }
+						: sessionFilter
+							? { sessionId: sessionFilter }
+							: {}),
 					...(source ? { source } : {}),
 					...(debouncedQ ? { q: debouncedQ } : {}),
 				},
@@ -115,6 +159,31 @@ export default function EnrollmentsManager({ initialPayload, programs }: Enrollm
 								{p.title}
 							</option>
 						))}
+					</select>
+				</div>
+				<div className="form-control min-w-[220px]">
+					<label className="label py-1">
+						<span className="label-text text-xs">Program session</span>
+					</label>
+					<select
+						className="select select-bordered select-sm w-full max-w-md"
+						value={sessionFilter}
+						onChange={(e) => setSessionFilter(e.target.value as "" | "none" | string)}
+					>
+						<option value="">All sessions</option>
+						<option value="none">No session</option>
+						{sessionOptions.map((s) => {
+							const progTitle = programTitleById.get(s.programId);
+							const label =
+								programId || !progTitle
+									? `${s.title} (${s.year})`
+									: `${progTitle} — ${s.title} (${s.year})`;
+							return (
+								<option key={s._id} value={s._id}>
+									{label}
+								</option>
+							);
+						})}
 					</select>
 				</div>
 				<div className="form-control min-w-[140px]">
