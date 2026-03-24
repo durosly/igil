@@ -12,6 +12,7 @@ type EnrollmentDetailInitial = {
 	studentName?: string;
 	studentEmail?: string;
 	programTitle: string;
+	sessionId?: string;
 	source: string;
 	createdAt?: string;
 	profileApproved: boolean;

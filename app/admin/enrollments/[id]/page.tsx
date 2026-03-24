@@ -30,7 +30,9 @@ export default async function AdminEnrollmentDetailPage({ params }: Props) {
 	const progId = result.enrollment.programId;
 	const programOid = Types.ObjectId.isValid(progId) ? new Types.ObjectId(progId) : null;
 	const sessionsRaw = programOid
-		? await ProgramSession.find({ programId: programOid }).sort({ year: -1 }).lean()
+		? await ProgramSession.find({ programId: programOid } as never)
+				.sort({ year: -1 })
+				.lean()
 		: [];
 	const sessions = sessionsRaw.map((s) => ({
 		_id: String(s._id),
