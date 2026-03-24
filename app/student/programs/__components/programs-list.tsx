@@ -60,9 +60,10 @@ export default function ProgramsList({ programs: initialPrograms, sessions }: Pr
 
 	const sessionsByProgram = new Map<string, Session[]>();
 	for (const s of sessions) {
-		const pid = typeof s.programId === "object" && s.programId !== null
-			? (s.programId as { _id: string })._id
-			: String(s.programId);
+		const pid =
+			typeof s.programId === "object" && s.programId !== null
+				? (s.programId as { _id: string })._id
+				: String(s.programId);
 		const list = sessionsByProgram.get(pid) ?? [];
 		list.push(s);
 		sessionsByProgram.set(pid, list);
@@ -82,7 +83,9 @@ export default function ProgramsList({ programs: initialPrograms, sessions }: Pr
 								sizes="(max-width: 768px) 100vw, 33vw"
 							/>
 						) : (
-							<div className="flex items-center justify-center text-base-content/40">No cover</div>
+							<div className="flex items-center justify-center text-base-content/40">
+								No cover
+							</div>
 						)}
 					</figure>
 					<div className="card-body">
@@ -93,9 +96,10 @@ export default function ProgramsList({ programs: initialPrograms, sessions }: Pr
 								type="button"
 								className="btn btn-primary btn-sm"
 								onClick={() => enrollMutation.mutate(program._id)}
-								disabled={enrollMutation.isPending}
-							>
-								{enrollMutation.isPending ? "Registering..." : "Register"}
+								disabled={enrollMutation.isPending}>
+								{enrollMutation.isPending
+									? "Registering..."
+									: "Register"}
 							</button>
 						</div>
 					</div>

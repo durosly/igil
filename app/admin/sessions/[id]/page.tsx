@@ -3,7 +3,7 @@ import connectDB from "@/lib/db";
 import ProgramSession from "@/models/ProgramSession";
 import Enrollment from "@/models/Enrollment";
 import { notFound } from "next/navigation";
-import SessionStudentsManager from "../../__components/session-students-manager";
+import SessionStudentsManager from "../__components/session-students-manager";
 
 export const metadata: Metadata = {
 	title: "Session Students",

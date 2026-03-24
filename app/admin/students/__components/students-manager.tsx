@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 
 interface Enrollment {
@@ -133,8 +134,20 @@ export default function StudentsManager({ initialStudents, programs }: StudentsM
 					<tbody>
 						{students.map((s) => (
 							<tr key={s.id}>
-								<td>{s.name ?? "—"}</td>
-								<td>{s.email ?? "—"}</td>
+								<td>
+									<Link href={`/admin/students/${s.id}`} className="link link-primary">
+										{s.name ?? "—"}
+									</Link>
+								</td>
+								<td>
+									{s.email ? (
+										<Link href={`/admin/students/${s.id}`} className="link link-hover">
+											{s.email}
+										</Link>
+									) : (
+										"—"
+									)}
+								</td>
 								<td>{s.profileApproved ? "Yes" : "No"}</td>
 								<td>{(s.enrollments?.length ?? 0)}</td>
 							</tr>

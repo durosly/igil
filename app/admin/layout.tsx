@@ -1,4 +1,15 @@
-import { Images, LayoutDashboard, Menu, Settings, X, Users, BookOpen, Award, Calendar } from "lucide-react";
+import {
+	Images,
+	LayoutDashboard,
+	Menu,
+	Settings,
+	X,
+	Users,
+	BookOpen,
+	Award,
+	Calendar,
+	ClipboardList,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -57,6 +68,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 							<Link href="/admin/students" className="flex items-center gap-3">
 								<Users className="w-5 h-5" />
 								Students
+							</Link>
+						</li>
+						<li>
+							<Link href="/admin/enrollments" className="flex items-center gap-3">
+								<ClipboardList className="w-5 h-5" />
+								Enrollments
 							</Link>
 						</li>
 						<li>

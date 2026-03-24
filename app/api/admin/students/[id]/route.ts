@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { betterAuthUserIdFilter } from "@/lib/admin/better-auth-user-filter";
 import connectDB from "@/lib/db";
 import { getClient } from "@/lib/db";
 import Enrollment from "@/models/Enrollment";
+import { getStudentForAdmin } from "@/lib/admin/get-student-for-admin";
+
+export async function GET(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	const { id } = await params;
+	const result = await getStudentForAdmin(request.headers, id);
+	if (!result.ok) {
+		return NextResponse.json({ error: result.error }, { status: result.status });
+	}
+	return NextResponse.json(result.student);
+}
 
 export async function PATCH(
 	request: NextRequest,
@@ -23,8 +37,12 @@ export async function PATCH(
 
 		if (profileApproved !== undefined) {
 			const db = await getClient();
-			await db.collection("user").updateOne(
-				{ id: userId },
+			await db.collection("user").updateOne(betterAuthUserIdFilter(userId), {
+				$set: { profileApproved: !!profileApproved },
+			});
+			await connectDB();
+			await Enrollment.updateMany(
+				{ userId },
 				{ $set: { profileApproved: !!profileApproved } }
 			);
 		}
