@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IGIL Admin Dashboard User Guide</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.5; margin: 28px; color: #111; }
+    h1, h2, h3 { color: #111; }
+    h1 { font-size: 30px; margin-top: 0; }
+    h2 { font-size: 22px; margin-top: 26px; page-break-after: avoid; }
+    h3 { font-size: 18px; margin-top: 20px; page-break-after: avoid; }
+    p, li { font-size: 13px; }
+    ul, ol { margin: 8px 0 10px 22px; }
+    code { background: #f4f4f4; padding: 1px 4px; border-radius: 4px; }
+    img { max-width: 100%; border: 1px solid #ddd; border-radius: 6px; margin: 8px 0 16px; page-break-inside: avoid; }
+    .small { color: #555; font-size: 12px; }
+  </style>
+</head>
+<body>
+<h1>IGIL Admin Dashboard User Guide</h1>
+<p>Version: 1.0</p>
+<p>Audience: Admin users</p>
+<p>Applies to: `app/admin`</p>
+<h2>1) What this dashboard is for</h2>
+<p>The Admin Dashboard helps you manage:</p>
+<ul>
+<li>Students and their profiles</li>
+<li>Enrollments and approvals</li>
+<li>Programs and program sessions</li>
+<li>Certificates and download unlocks</li>
+<li>Gallery images</li>
+<li>Your admin account settings</li>
+</ul>
+<p>Use the left sidebar to move between sections:</p>
+<ul>
+<li>Dashboard</li>
+<li>Students</li>
+<li>Enrollments</li>
+<li>Programs</li>
+<li>Sessions</li>
+<li>Certificates</li>
+<li>Gallery Management</li>
+<li>Settings</li>
+</ul>
+<h2>2) Dashboard overview</h2>
+<p>Path: `/admin/dashboard`</p>
+<p>The dashboard shows quick stats:</p>
+<ul>
+<li>Gallery Images: total image count</li>
+<li>Recent Activity: images added in the last 24 hours</li>
+<li>Storage Used: total gallery storage</li>
+</ul>
+<p>Use this page as your quick health check before deeper actions.</p>
+<img src="./admin-guide/screenshots/01-dashboard.png" alt="Dashboard overview" />
+<h2>3) Students</h2>
+<p>Path: `/admin/students`</p>
+<h3>What you can do</h3>
+<ul>
+<li>Create a student manually</li>
+<li>Search students by name/email</li>
+<li>Filter by program</li>
+<li>Filter by profile approval status</li>
+<li>Open a student's profile page</li>
+</ul>
+<img src="./admin-guide/screenshots/02-students-list.png" alt="Students list" />
+<h3>Create a student</h3>
+<ol>
+<li>Click Create Student.</li>
+<li>Fill in:</li>
+</ol>
+<ul>
+<li>Name</li>
+<li>Email</li>
+<li>Temporary password (minimum 8 characters)</li>
+</ul>
+<ol>
+<li>Optional:</li>
+</ol>
+<ul>
+<li>Assign to a program</li>
+<li>Enter program name for invite email</li>
+<li>Keep Send invitation email checked if needed</li>
+</ul>
+<ol>
+<li>Click Create.</li>
+</ol>
+<p>Expected result: the student appears in the list and can be opened from name/email.</p>
+<img src="./admin-guide/screenshots/03-create-student-modal.png" alt="Create student modal" />
+<h3>Student profile page</h3>
+<p>Path: `/admin/students/{id}`</p>
+<p>Use this page to review student details and enrollment status summary.</p>
+<h2>4) Enrollments</h2>
+<p>List path: `/admin/enrollments`</p>
+<p>Detail path: `/admin/enrollments/{id}`</p>
+<h3>What you can do from the list</h3>
+<ul>
+<li>Filter by Program</li>
+<li>Filter by Program session</li>
+<li>Filter by Source (`invited` or `self`)</li>
+<li>Search student by name/email</li>
+<li>Open Details for any enrollment</li>
+</ul>
+<img src="./admin-guide/screenshots/04-enrollments-list.png" alt="Enrollments list" />
+<h3>Enrollment detail workflow (most important)</h3>
+<p>On the detail page, process enrollments in this order:</p>
+<ol>
+<li>Confirm Student and Program.</li>
+<li>Set Program approved if requirements are met.</li>
+<li>Set Payment approved after payment verification.</li>
+<li>Assign a Session (required before completion).</li>
+<li>Check Mark enrollment complete.</li>
+</ol>
+<p>Expected result: enrollment status reaches completed state.</p>
+<img src="./admin-guide/screenshots/05-enrollment-detail-approvals.png" alt="Enrollment detail and approvals" />
+<h3>Certificate actions from enrollment detail</h3>
+<p>After completion, a Certificate section appears.</p>
+<p>You can:</p>
+<ul>
+<li>Upload certificate file (PDF/image)</li>
+<li>Set certificate number</li>
+<li>Set issued date</li>
+<li>Save certificate details</li>
+</ul>
+<h2>5) Programs</h2>
+<p>List path: `/admin/programs`</p>
+<p>Create path: `/admin/programs/new`</p>
+<p>Edit path: `/admin/programs/{id}/edit`</p>
+<h3>What you can do</h3>
+<ul>
+<li>Create a new program</li>
+<li>Edit program details</li>
+<li>Delete a program</li>
+</ul>
+<img src="./admin-guide/screenshots/06-programs-cards.png" alt="Programs page" />
+<h3>Create or edit a program</h3>
+<p>Fill:</p>
+<ul>
+<li>Title (required)</li>
+<li>Description (required)</li>
+<li>Cover image (optional upload)</li>
+<li>Payment instruction (optional)</li>
+<li>Status (`draft` or `active`)</li>
+</ul>
+<p>Click Create or Update to save.</p>
+<img src="./admin-guide/screenshots/07-program-form.png" alt="Program form" />
+<h3>Delete a program</h3>
+<ol>
+<li>Click Delete on a program card.</li>
+<li>Confirm deletion in the prompt.</li>
+</ol>
+<p>Use caution: deleting affects program availability and related operations.</p>
+<h2>6) Sessions</h2>
+<p>List path: `/admin/sessions`</p>
+<p>Manage students path: `/admin/sessions/{id}`</p>
+<h3>Create a session</h3>
+<ol>
+<li>Click New Session.</li>
+<li>Select Program.</li>
+<li>Set Year and Title.</li>
+<li>Click Create.</li>
+</ol>
+<img src="./admin-guide/screenshots/08-sessions-list.png" alt="Sessions list" />
+<h3>Manage session students</h3>
+<ol>
+<li>Click Manage on a session row.</li>
+<li>On the session page:</li>
+</ol>
+<ul>
+<li>Search by name or user ID</li>
+<li>Filter by Program approved</li>
+<li>Filter by In this session</li>
+</ul>
+<ol>
+<li>Check/uncheck In session per student.</li>
+<li>Click Save changes.</li>
+</ol>
+<p>Expected result: session membership updates and session student count refreshes.</p>
+<img src="./admin-guide/screenshots/09-session-students-manage.png" alt="Session student management" />
+<h2>7) Certificates</h2>
+<p>Path: `/admin/certificates`</p>
+<h3>What you can do</h3>
+<ul>
+<li>View certificate records by user/program/session</li>
+<li>Review certificate number and file link</li>
+<li>See student download count</li>
+<li>See unlock expiry</li>
+<li>Unlock student downloads for 24 hours</li>
+</ul>
+<img src="./admin-guide/screenshots/10-certificates-table.png" alt="Certificates table" />
+<h3>Unlock workflow</h3>
+<ol>
+<li>Locate the certificate row.</li>
+<li>Click Unlock 24h.</li>
+</ol>
+<p>Expected result: unlock end time updates and student can download during the unlock period.</p>
+<h2>8) Gallery Management</h2>
+<p>Path: `/admin/gallery`</p>
+<h3>What you can do</h3>
+<ul>
+<li>Upload new images</li>
+<li>Edit image metadata</li>
+<li>Delete images</li>
+<li>Browse with pagination</li>
+</ul>
+<img src="./admin-guide/screenshots/11-gallery-management.png" alt="Gallery management" />
+<h3>Recommended flow</h3>
+<ol>
+<li>Upload image from Upload action.</li>
+<li>Verify title/description and thumbnail.</li>
+<li>Use edit action to fix metadata.</li>
+<li>Use delete only when content is obsolete.</li>
+</ol>
+<h2>9) Settings</h2>
+<p>Path: `/admin/settings`</p>
+<h3>Change email</h3>
+<ol>
+<li>Enter current email.</li>
+<li>Enter new email and confirmation.</li>
+<li>Click Change Email.</li>
+</ol>
+<h3>Change password</h3>
+<ol>
+<li>Enter current password.</li>
+<li>Enter new password and confirmation (minimum 8 characters).</li>
+<li>Click Change Password.</li>
+</ol>
+<img src="./admin-guide/screenshots/12-settings-forms.png" alt="Settings forms" />
+<h2>10) Common messages and what they mean</h2>
+<ul>
+<li>No students/enrollments/sessions yet: no data for current state; create records first.</li>
+<li>No records match current filters: clear some filters or search terms.</li>
+<li>Program and title are required: missing required session fields.</li>
+<li>Assign a session before marking complete: set session first in enrollment detail.</li>
+</ul>
+<h2>11) Best-practice checklist</h2>
+<ul>
+<li>Approve in sequence: profile -&gt; program -&gt; payment -&gt; completion.</li>
+<li>Always assign session before marking completion.</li>
+<li>Keep program titles and session titles clear and consistent.</li>
+<li>Add certificate number and issue date immediately after upload.</li>
+<li>Use filters before editing to avoid modifying the wrong record.</li>
+</ul>
+<h2>12) Screenshot index</h2>
+<p>Store screenshots under: `docs/admin-guide/screenshots/`</p>
+<p>Planned files:</p>
+<ul>
+<li>`01-dashboard.png`</li>
+<li>`02-students-list.png`</li>
+<li>`03-create-student-modal.png`</li>
+<li>`04-enrollments-list.png`</li>
+<li>`05-enrollment-detail-approvals.png`</li>
+<li>`06-programs-cards.png`</li>
+<li>`07-program-form.png`</li>
+<li>`08-sessions-list.png`</li>
+<li>`09-session-students-manage.png`</li>
+<li>`10-certificates-table.png`</li>
+<li>`11-gallery-management.png`</li>
+<li>`12-settings-forms.png`</li>
+</ul>
+</body></html>
