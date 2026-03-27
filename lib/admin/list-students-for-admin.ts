@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 import connectDB from "@/lib/db";
 import Enrollment from "@/models/Enrollment";
 
-/** Plain shape passed to the admin students UI (matches `Student` / `Enrollment` in students-manager). */
+/** Plain shape passed to the admin students UI (matches `Student` / `Enrollment` in students-types). */
 export type AdminStudentListItem = {
 	id: string;
 	name?: string;
