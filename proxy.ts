@@ -22,7 +22,7 @@ export async function proxy(request: NextRequest) {
 	const isRegister = pathname === "/register" || pathname.startsWith("/register");
 	const isRoot = pathname === "/";
 
-	// Only "admin" gets admin access; "student", "user", and others get student access
+	// Only "admin" gets admin access; "student" and any other non-admin role use student routes
 	const isAdminRole = role === "admin";
 	const isStudentRole = !isAdminRole;
 

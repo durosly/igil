@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { admin } from "better-auth/plugins/admin";
+import { ac, adminRole, studentRole } from "./auth-permissions";
 import { getClient } from "./db";
 import { sendVerificationEmail } from "./email";
 
@@ -63,7 +64,17 @@ export const auth = betterAuth({
 	baseURL: baseURL ?? "http://localhost:3000",
 	basePath: "/api/auth",
 	secret: process.env.BETTER_AUTH_SECRET!,
-	plugins: [admin({ defaultRole: "student" })],
+	plugins: [
+		admin({
+			ac,
+			roles: {
+				admin: adminRole,
+				student: studentRole,
+			},
+			defaultRole: "student",
+			adminRoles: ["admin"],
+		}),
+	],
 });
 
 export type Session = typeof auth.$Infer.Session;

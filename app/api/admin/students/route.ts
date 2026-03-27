@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
 				email: String(email).trim(),
 				name: String(name).trim(),
 				password: String(password),
-				role: "user",
+				role: "student",
 				data: {
 					mustChangePassword: true,
 					profileApproved: false,
