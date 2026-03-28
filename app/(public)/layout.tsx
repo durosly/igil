@@ -192,6 +192,13 @@ function PublicLayout({ children }: { children: ReactNode }) {
 											Completed Jobs
 										</Link>
 									</li>
+									<li>
+										<Link
+											href="/verify-certificate"
+											className="footer-link">
+											Verify certificate
+										</Link>
+									</li>
 								</ul>
 							</div>
 

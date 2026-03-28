@@ -59,6 +59,7 @@ const CertificateSchema = new Schema<ICertificate>(
 
 CertificateSchema.index({ userId: 1, programId: 1 }, { unique: true });
 CertificateSchema.index({ userId: 1 });
+CertificateSchema.index({ certificateNumber: 1 }, { sparse: true });
 
 const Certificate: Model<ICertificate> = models.Certificate || model<ICertificate>("Certificate", CertificateSchema);
 
