@@ -1,3 +1,4 @@
+import "server-only";
 import mongoose from "mongoose";
 import { config } from "dotenv";
 import path from "path";
@@ -38,6 +39,9 @@ async function connectDB(): Promise<typeof mongoose> {
 	if (!cached.promise) {
 		const opts = {
 			bufferCommands: false,
+			// Align with MONGODB_NAME (and scripts that use client.db(MONGODB_NAME)) when the URI omits
+			// or disagrees with the intended database name — a common production misconfiguration.
+			...(process.env.MONGODB_NAME ? { dbName: process.env.MONGODB_NAME } : {}),
 		};
 
 		cached.promise = mongoose
