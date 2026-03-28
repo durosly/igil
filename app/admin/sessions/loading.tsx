@@ -1,9 +1,7 @@
 export default function AdminSessionsLoading() {
 	return (
 		<div>
-			{/* Matches <h1 className="text-4xl font-bold mb-6">Sessions</h1> */}
-			{/* <div className="skeleton mb-6 h-10 max-w-[12rem] rounded-md" aria-hidden /> */}
-			<h1 className="text-4xl font-bold mb-6 skeleton skeleton-text">Sessions</h1>
+			<div className="skeleton mb-6 h-10 max-w-[12rem] rounded-md" aria-hidden />
 
 			<div className="flex flex-col">
 				{/* NewSessionButton: flex justify-end mb-4 + btn-shaped block */}
