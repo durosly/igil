@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Program from "@/models/Program";
 import { auth } from "@/lib/auth";
+import { deleteProgramCascade } from "@/lib/admin/program-deletion";
 
 export async function GET(
 	_request: NextRequest,
@@ -63,11 +64,11 @@ export async function PATCH(
 }
 
 export async function DELETE(
-	_request: NextRequest,
+	request: NextRequest,
 	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const session = await auth.api.getSession({ headers: _request.headers });
+		const session = await auth.api.getSession({ headers: request.headers });
 		if (!session?.user) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 		}
@@ -76,13 +77,12 @@ export async function DELETE(
 			return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 		}
 
-		await connectDB();
 		const { id } = await params;
-		const program = await Program.findByIdAndDelete(id);
-		if (!program) {
-			return NextResponse.json({ error: "Program not found" }, { status: 404 });
+		const result = await deleteProgramCascade(id);
+		if (!result.ok) {
+			return NextResponse.json({ error: result.error }, { status: result.status });
 		}
-		return NextResponse.json({ message: "Deleted" });
+		return NextResponse.json({ success: true });
 	} catch (error) {
 		console.error("Error deleting program:", error);
 		return NextResponse.json({ error: "Failed to delete program" }, { status: 500 });
