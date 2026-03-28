@@ -4,6 +4,7 @@ import connectDB from "@/lib/db";
 import Enrollment from "@/models/Enrollment";
 import ProgramSession from "@/models/ProgramSession";
 import { getEnrollmentForAdmin } from "@/lib/admin/get-enrollment-for-admin";
+import { deleteEnrollmentCascade } from "@/lib/admin/enrollment-deletion";
 import {
 	syncCertificateForEnrollment,
 	SyncCertificateError,
@@ -159,5 +160,30 @@ export async function PATCH(
 	} catch (error) {
 		console.error("Error updating enrollment:", error);
 		return NextResponse.json({ error: "Failed to update enrollment" }, { status: 500 });
+	}
+}
+
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	try {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session?.user) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		}
+		if ((session.user as { role?: string }).role !== "admin") {
+			return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		}
+
+		const { id } = await params;
+		const result = await deleteEnrollmentCascade(id);
+		if (!result.ok) {
+			return NextResponse.json({ error: result.error }, { status: result.status });
+		}
+		return NextResponse.json({ success: true });
+	} catch (error) {
+		console.error("Error deleting enrollment:", error);
+		return NextResponse.json({ error: "Failed to delete enrollment" }, { status: 500 });
 	}
 }

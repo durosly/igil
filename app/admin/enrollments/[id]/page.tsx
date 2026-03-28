@@ -3,10 +3,12 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Types } from "mongoose";
+import { getEnrollmentDeletionImpactForAdmin } from "@/lib/admin/enrollment-deletion";
 import { getEnrollmentForAdmin } from "@/lib/admin/get-enrollment-for-admin";
 import connectDB from "@/lib/db";
 import ProgramSession from "@/models/ProgramSession";
 import EnrollmentDetailForm from "../__components/enrollment-detail-form";
+import DeleteEnrollmentButton from "./__components/delete-enrollment-button";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -42,6 +44,15 @@ export default async function AdminEnrollmentDetailPage({ params }: Props) {
 
 	const initial = JSON.parse(JSON.stringify(result.enrollment));
 
+	const deletion = await getEnrollmentDeletionImpactForAdmin(headersList, id);
+	if (!deletion.ok) {
+		if (deletion.status === 401) redirect("/login");
+		if (deletion.status === 403) redirect("/");
+		if (deletion.status === 404) redirect("/admin/enrollments");
+		throw new Error(deletion.error);
+	}
+	const deletionImpact = JSON.parse(JSON.stringify(deletion.impact));
+
 	return (
 		<div>
 			<div className="mb-6">
@@ -49,7 +60,10 @@ export default async function AdminEnrollmentDetailPage({ params }: Props) {
 					← Enrollments
 				</Link>
 			</div>
-			<h1 className="text-4xl font-bold mb-6">Enrollment details</h1>
+			<div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+				<h1 className="text-4xl font-bold">Enrollment details</h1>
+				<DeleteEnrollmentButton enrollmentId={id} impact={deletionImpact} />
+			</div>
 			<EnrollmentDetailForm enrollmentId={id} initial={initial} sessions={sessions} />
 		</div>
 	);
