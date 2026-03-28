@@ -53,7 +53,7 @@ export default function CreateSessionModal({ programs }: CreateSessionModalProps
 	useEffect(() => {
 		if (!open) return;
 		reset({
-			programId: programs[0]?._id ?? "",
+			programId: "",
 			year: defaultYear(),
 			title: "",
 		});
@@ -102,9 +102,10 @@ export default function CreateSessionModal({ programs }: CreateSessionModalProps
 						<select
 							className="select select-bordered"
 							disabled={programs.length === 0}
-							{...register("programId")}
-						>
-							<option value="">Select program</option>
+							{...register("programId")}>
+							<option value="" disabled>
+								Select program
+							</option>
 							{programs.map((p) => (
 								<option key={p._id} value={p._id}>
 									{p.title}
@@ -112,7 +113,9 @@ export default function CreateSessionModal({ programs }: CreateSessionModalProps
 							))}
 						</select>
 						{errors.programId && (
-							<span className="label-text-alt text-error">{errors.programId.message}</span>
+							<span className="label-text-alt text-error">
+								{errors.programId.message}
+							</span>
 						)}
 						{programs.length === 0 && (
 							<span className="label-text-alt text-warning mt-1">
@@ -130,7 +133,9 @@ export default function CreateSessionModal({ programs }: CreateSessionModalProps
 							{...register("year", { valueAsNumber: true })}
 						/>
 						{errors.year && (
-							<span className="label-text-alt text-error">{errors.year.message}</span>
+							<span className="label-text-alt text-error">
+								{errors.year.message}
+							</span>
 						)}
 					</div>
 					<div className="form-control">
@@ -144,7 +149,9 @@ export default function CreateSessionModal({ programs }: CreateSessionModalProps
 							{...register("title")}
 						/>
 						{errors.title && (
-							<span className="label-text-alt text-error">{errors.title.message}</span>
+							<span className="label-text-alt text-error">
+								{errors.title.message}
+							</span>
 						)}
 					</div>
 					<div className="modal-action">
@@ -154,8 +161,7 @@ export default function CreateSessionModal({ programs }: CreateSessionModalProps
 						<button
 							type="submit"
 							className="btn btn-primary"
-							disabled={createMutation.isPending || programs.length === 0}
-						>
+							disabled={createMutation.isPending || programs.length === 0}>
 							{createMutation.isPending ? "Creating..." : "Create"}
 						</button>
 					</div>
