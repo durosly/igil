@@ -3,11 +3,20 @@ import "server-only";
 import { auth } from "@/lib/auth";
 import connectDB from "@/lib/db";
 import { getClient } from "@/lib/db";
+import Certificate from "@/models/Certificate";
 import Enrollment from "@/models/Enrollment";
+import PaymentCode from "@/models/PaymentCode";
 import {
 	betterAuthUserDocumentId,
 	betterAuthUserIdFilter,
 } from "@/lib/admin/better-auth-user-filter";
+import type {
+	StudentDeletionImpact,
+	StudentDeletionImpactCertificate,
+	StudentDeletionImpactPaymentCode,
+} from "@/lib/admin/student-deletion-types";
+
+export type { StudentDeletionImpact, StudentDeletionImpactCertificate, StudentDeletionImpactPaymentCode };
 
 export type AdminStudentDetail = {
 	id: string;
@@ -25,6 +34,7 @@ export type AdminStudentDetail = {
 		programApproved: boolean;
 		paymentApproved: boolean;
 	}[];
+	deletionImpact: StudentDeletionImpact;
 };
 
 export type GetStudentForAdminResult =
@@ -103,6 +113,38 @@ export async function getStudentForAdmin(
 
 		const resolvedId = betterAuthUserDocumentId(userDoc) || userId;
 
+		const certRows = await Certificate.find({ userId })
+			.populate("programId", "title")
+			.populate("sessionId", "title year")
+			.sort({ createdAt: -1 })
+			.lean();
+
+		const certificates: StudentDeletionImpactCertificate[] = certRows.map((c) => {
+			const prog = programTitle(c.programId);
+			return {
+				_id: String(c._id),
+				programTitle: prog.title,
+				sessionLabel: sessionLabel(c.sessionId),
+				originalFileName: c.originalFileName,
+				hasUploadedFile: !!c.storageKey,
+			};
+		});
+
+		const paymentRows = await PaymentCode.find({ userId })
+			.populate("programId", "title")
+			.sort({ createdAt: -1 })
+			.lean();
+
+		const paymentCodes: StudentDeletionImpactPaymentCode[] = paymentRows.map((p) => {
+			const prog = programTitle(p.programId);
+			return {
+				_id: String(p._id),
+				code: p.code,
+				programTitle: prog.title,
+				used: p.used,
+			};
+		});
+
 		return {
 			ok: true,
 			student: {
@@ -112,6 +154,7 @@ export async function getStudentForAdmin(
 				role: userDoc.role,
 				profileApproved: userDoc.profileApproved,
 				enrollments,
+				deletionImpact: { certificates, paymentCodes },
 			},
 		};
 	} catch (error) {

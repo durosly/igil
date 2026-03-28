@@ -3,7 +3,8 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getStudentForAdmin } from "@/lib/admin/get-student-for-admin";
-import StudentProfileForm from "../__components/student-profile-form";
+import DeleteStudentButton from "./__components/delete-student-button";
+import StudentProfileForm from "./__components/student-profile-form";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -41,6 +42,14 @@ export default async function AdminStudentProfilePage({ params }: Props) {
 		})
 	);
 
+	const deletionImpact = JSON.parse(JSON.stringify(s.deletionImpact));
+	const enrollmentsForDelete = s.enrollments.map((e) => ({
+		_id: e._id,
+		programTitle: e.programTitle,
+		sessionLabel: e.sessionLabel,
+		source: e.source,
+	}));
+
 	return (
 		<div>
 			<div className="mb-6">
@@ -48,7 +57,16 @@ export default async function AdminStudentProfilePage({ params }: Props) {
 					← Students
 				</Link>
 			</div>
-			<h1 className="text-4xl font-bold mb-6">Student profile</h1>
+			<div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+				<h1 className="text-4xl font-bold">Student profile</h1>
+				<DeleteStudentButton
+					studentId={s.id}
+					studentName={s.name}
+					studentEmail={s.email}
+					enrollments={enrollmentsForDelete}
+					deletionImpact={deletionImpact}
+				/>
+			</div>
 			<StudentProfileForm initial={initial} />
 		</div>
 	);

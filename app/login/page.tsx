@@ -9,25 +9,27 @@ export default function LoginPage() {
 				<div className="card-body">
 					{/* Logo */}
 					<div className="flex items-center justify-center mb-6">
-						<div className="relative w-20 h-20">
+						<div className="relative size-20">
 							<Image
 								src="/images/logo.png"
 								alt="IGIL Logo"
 								fill
 								className="object-contain"
 								sizes="80px"
+								priority
 							/>
 						</div>
 					</div>
 
 					<h1 className="text-3xl font-bold text-center mb-2">Sign In</h1>
-					<p className="text-center text-gray-600 mb-6">
-						Sign in to your account
-					</p>
+					<p className="text-center text-gray-600 mb-6">Sign in to your account</p>
 
 					<LoginForm />
 					<p className="text-center text-sm mt-4">
-						Don&apos;t have an account? <Link href="/register" className="link link-primary">Sign up here</Link>
+						Don&apos;t have an account?{" "}
+						<Link href="/register" className="link link-primary">
+							Sign up here
+						</Link>
 					</p>
 				</div>
 			</div>

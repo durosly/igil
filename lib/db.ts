@@ -1,5 +1,7 @@
 import "server-only";
 import mongoose from "mongoose";
+import "@/models/Program";
+import "@/models/ProgramSession";
 import { config } from "dotenv";
 import path from "path";
 
