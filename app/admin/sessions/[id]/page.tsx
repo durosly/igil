@@ -4,12 +4,15 @@ import {
 	betterAuthUserDocumentId,
 	betterAuthUserIdFilter,
 } from "@/lib/admin/better-auth-user-filter";
+import { getSessionDeletionImpactForAdmin } from "@/lib/admin/program-session-deletion";
 import ProgramSession from "@/models/ProgramSession";
 import Enrollment from "@/models/Enrollment";
 import type { IEnrollment } from "@/models/Enrollment";
 import { Types } from "mongoose";
-import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 import SessionStudentsManager from "../__components/session-students-manager";
+import DeleteSessionButton from "./__components/delete-session-button";
 
 export const metadata: Metadata = {
 	title: "Session Students",
@@ -85,12 +88,27 @@ export default async function SessionDetailPage({
 		sessionId: sessionObjectId as unknown as NonNullable<IEnrollment["sessionId"]>,
 	} as never)) as string[];
 
+	const headersList = await headers();
+	const deletion = await getSessionDeletionImpactForAdmin(headersList, id);
+	if (!deletion.ok) {
+		if (deletion.status === 401) redirect("/login");
+		if (deletion.status === 403) redirect("/");
+		if (deletion.status === 404) notFound();
+		throw new Error(deletion.error);
+	}
+	const deletionImpact = JSON.parse(JSON.stringify(deletion.impact));
+
 	return (
 		<div>
-			<h1 className="text-4xl font-bold mb-2">
-				{programTitle} – {session.title}
-			</h1>
-			<p className="text-base-content/70 mb-6">Year: {session.year}</p>
+			<div className="flex flex-wrap items-start justify-between gap-4 mb-2">
+				<div>
+					<h1 className="text-4xl font-bold mb-2">
+						{programTitle} – {session.title}
+					</h1>
+					<p className="text-base-content/70 mb-6">Year: {session.year}</p>
+				</div>
+				<DeleteSessionButton sessionId={String(session._id)} impact={deletionImpact} />
+			</div>
 			<SessionStudentsManager
 				sessionId={String(session._id)}
 				initialMembershipUserIds={initialMembershipUserIds}

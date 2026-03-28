@@ -4,6 +4,7 @@ import ProgramSession from "@/models/ProgramSession";
 import Enrollment from "@/models/Enrollment";
 import type { IEnrollment } from "@/models/Enrollment";
 import { auth } from "@/lib/auth";
+import { deleteProgramSessionCascade } from "@/lib/admin/program-session-deletion";
 import { Types } from "mongoose";
 
 function normalizeMembershipUserIds(studentIds: unknown[]): string[] {
@@ -134,5 +135,30 @@ export async function GET(
 	} catch (error) {
 		console.error("Error fetching session:", error);
 		return NextResponse.json({ error: "Failed to fetch session" }, { status: 500 });
+	}
+}
+
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	try {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session?.user) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		}
+		if ((session.user as { role?: string }).role !== "admin") {
+			return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+		}
+
+		const { id } = await params;
+		const result = await deleteProgramSessionCascade(id);
+		if (!result.ok) {
+			return NextResponse.json({ error: result.error }, { status: result.status });
+		}
+		return NextResponse.json({ success: true });
+	} catch (error) {
+		console.error("Error deleting session:", error);
+		return NextResponse.json({ error: "Failed to delete session" }, { status: 500 });
 	}
 }
