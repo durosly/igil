@@ -176,13 +176,11 @@ export default function Home() {
 					</p>
 					<div className="mb-8 space-y-2">
 						<p>
-							At IDAN GLOBAL INTEGRATED LIMITED (IGIL), we take pride in being
-							a trusted leader in Non-Destructive Testing services. Our
-							culture and business model offer clients the best of both
-							worlds: the dedicated, hands-on service of a specialized firm
-							combined with the advanced technological capabilities and
-							expertise of a large inspection company.
+							IDAN Global Integrated Limited is a professional company specializing in Non-Destructive Testing (NDT) training and certification. We are committed to providing high-quality, industry-focused training designed to equip individuals with the technical knowledge, practical skills, and professional competence required to excel in the NDT industry.
 						</p>
+						<p>Our training programs cover a range of NDT methods, delivered with emphasis on safety, accuracy, quality, and industry best practices. We aim to develop competent NDT professionals who can confidently apply inspection techniques in accordance with applicable industry standards and requirements.</p>
+						<p>At IDAN Global Integrated Limited, our commitment is to excellence, integrity, safety, and professional development, helping individuals and organizations build reliable NDT capabilities for improved inspection quality and asset integrity.</p>
+						<p>IDAN Global Integrated Limited — Training Professionals. Building Competence. Ensuring Integrity.</p>
 						<p>
 							We specialize in <strong>Non-Destructive Testing (NDT)</strong> in Oil and Gas industries,{" "}
 							<strong>sales of NDT equipment</strong>, <strong>Procurement</strong>,{" "}
