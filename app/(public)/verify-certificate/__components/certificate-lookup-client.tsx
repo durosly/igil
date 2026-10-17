@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, isPast } from "date-fns";
 import { Award, Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
@@ -9,7 +9,8 @@ type PublicCertificateRow = {
 	programTitle: string;
 	sessionLabel: string;
 	issuedAt?: string;
-	completedAt: string;
+	completedAt?: string;
+	expiresAt?: string;
 	hasDocument: boolean;
 };
 
@@ -137,10 +138,9 @@ export default function CertificateLookupClient({ initialQuery }: { initialQuery
 										>
 											<p className="font-medium text-gray-900">{c.programTitle}</p>
 											<p className="text-sm text-base-content/80">
-												{c.sessionLabel} — completed{" "}
-												{c.completedAt
-													? format(new Date(c.completedAt), "PP")
-													: "—"}
+												{c.sessionLabel}
+												{c.completedAt &&
+													` — completed ${format(new Date(c.completedAt), "PP")}`}
 											</p>
 											{c.certificateNumber && (
 												<p className="text-sm text-base-content/90">
@@ -151,6 +151,12 @@ export default function CertificateLookupClient({ initialQuery }: { initialQuery
 											{c.issuedAt && (
 												<p className="text-xs text-base-content/60">
 													Issued {format(new Date(c.issuedAt), "PP")}
+												</p>
+											)}
+											{c.expiresAt && (
+												<p className="text-xs text-base-content/60">
+													{isPast(new Date(c.expiresAt)) ? "Expired" : "Expires"}{" "}
+													{format(new Date(c.expiresAt), "PP")}
 												</p>
 											)}
 											<p className="text-xs text-base-content/50 pt-1">

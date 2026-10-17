@@ -28,6 +28,9 @@ type CertDisplay = {
 	originalFileName?: string;
 	certificateNumber?: string;
 	issuedAt?: string;
+	expiresAt?: string;
+	showCompletedAt?: boolean;
+	showExpiresAt?: boolean;
 	sessionLabel?: string;
 } | null;
 
@@ -275,6 +278,9 @@ export const EnrollmentCertificatePanel = memo(function EnrollmentCertificatePan
 						certId={certId}
 						initialCertificateNumber={certificate?.certificateNumber}
 						initialIssuedAtIso={certificate?.issuedAt}
+						initialExpiresAtIso={certificate?.expiresAt}
+						initialShowCompletedAt={certificate?.showCompletedAt ?? true}
+						initialShowExpiresAt={certificate?.showExpiresAt ?? false}
 					/>
 				</>
 			)}

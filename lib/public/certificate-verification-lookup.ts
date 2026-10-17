@@ -45,7 +45,10 @@ export type PublicCertificateRow = {
 	programTitle: string;
 	sessionLabel: string;
 	issuedAt?: string;
-	completedAt: string;
+	/** Omitted when the admin has hidden it (shown by default). */
+	completedAt?: string;
+	/** Omitted unless the admin has made it visible (hidden by default). */
+	expiresAt?: string;
 	hasDocument: boolean;
 };
 
@@ -61,18 +64,28 @@ function serializeCert(c: unknown): PublicCertificateRow {
 		sessionId?: unknown;
 		issuedAt?: unknown;
 		completedAt?: unknown;
+		expiresAt?: unknown;
+		showCompletedAt?: boolean;
+		showExpiresAt?: boolean;
 		documentUrl?: string;
 		storageKey?: string;
 	};
-	const completed = toIso(o.completedAt);
-	return {
+	const row: PublicCertificateRow = {
 		certificateNumber: o.certificateNumber,
 		programTitle: programTitle(o.programId),
 		sessionLabel: sessionLabel(o.sessionId),
 		issuedAt: toIso(o.issuedAt),
-		completedAt: completed ?? "",
 		hasDocument: Boolean(o.documentUrl || o.storageKey),
 	};
+	if (o.showCompletedAt !== false) {
+		const completed = toIso(o.completedAt);
+		if (completed) row.completedAt = completed;
+	}
+	if (o.showExpiresAt === true) {
+		const expires = toIso(o.expiresAt);
+		if (expires) row.expiresAt = expires;
+	}
+	return row;
 }
 
 export async function lookupCertificatesByQuery(

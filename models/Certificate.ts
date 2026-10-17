@@ -14,6 +14,11 @@ export interface ICertificate {
 	originalFileName?: string;
 	certificateNumber?: string;
 	issuedAt?: Date;
+	expiresAt?: Date;
+	/** Show completedAt on public verification. Missing = true. */
+	showCompletedAt?: boolean;
+	/** Show expiresAt on public verification. Missing = false. */
+	showExpiresAt?: boolean;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -51,6 +56,9 @@ const CertificateSchema = new Schema<ICertificate>(
 		originalFileName: { type: String },
 		certificateNumber: { type: String },
 		issuedAt: { type: Date },
+		expiresAt: { type: Date },
+		showCompletedAt: { type: Boolean, default: true },
+		showExpiresAt: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,

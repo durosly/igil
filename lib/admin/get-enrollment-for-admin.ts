@@ -18,6 +18,9 @@ export type AdminCertificateSummary = {
 	originalFileName?: string;
 	certificateNumber?: string;
 	issuedAt?: string;
+	expiresAt?: string;
+	showCompletedAt: boolean;
+	showExpiresAt: boolean;
 	downloadCount: number;
 	lastUnlockUntil?: string;
 };
@@ -111,6 +114,9 @@ export async function getEnrollmentForAdmin(
 					originalFileName: certDoc.originalFileName,
 					certificateNumber: certDoc.certificateNumber,
 					issuedAt: certDoc.issuedAt ? new Date(certDoc.issuedAt).toISOString() : undefined,
+					expiresAt: certDoc.expiresAt ? new Date(certDoc.expiresAt).toISOString() : undefined,
+					showCompletedAt: certDoc.showCompletedAt !== false,
+					showExpiresAt: certDoc.showExpiresAt === true,
 					downloadCount: certDoc.downloadCount ?? 0,
 					lastUnlockUntil: certDoc.lastUnlockUntil
 						? new Date(certDoc.lastUnlockUntil).toISOString()

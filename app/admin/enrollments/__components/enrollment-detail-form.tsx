@@ -25,6 +25,9 @@ type CertificateSummary = {
 	originalFileName?: string;
 	certificateNumber?: string;
 	issuedAt?: string;
+	expiresAt?: string;
+	showCompletedAt: boolean;
+	showExpiresAt: boolean;
 	downloadCount: number;
 	lastUnlockUntil?: string;
 };

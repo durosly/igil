@@ -20,25 +20,44 @@ type CertificateMetaFormProps = {
 	certId: string;
 	initialCertificateNumber?: string;
 	initialIssuedAtIso?: string;
+	initialExpiresAtIso?: string;
+	initialShowCompletedAt: boolean;
+	initialShowExpiresAt: boolean;
 };
 
 /**
- * Certificate number + issued date; local state so typing does not re-render the rest of the page.
+ * Certificate number, issued/expiry dates and public visibility toggles; local state so typing does not re-render the rest of the page.
  */
 function EnrollmentCertificateMetaFormInner({
 	certId,
 	initialCertificateNumber,
 	initialIssuedAtIso,
+	initialExpiresAtIso,
+	initialShowCompletedAt,
+	initialShowExpiresAt,
 }: CertificateMetaFormProps) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [certNumber, setCertNumber] = useState(initialCertificateNumber ?? "");
 	const [issuedAtInput, setIssuedAtInput] = useState(isoToDateInput(initialIssuedAtIso));
+	const [expiresAtInput, setExpiresAtInput] = useState(isoToDateInput(initialExpiresAtIso));
+	const [showCompletedAt, setShowCompletedAt] = useState(initialShowCompletedAt);
+	const [showExpiresAt, setShowExpiresAt] = useState(initialShowExpiresAt);
 
 	useEffect(() => {
 		setCertNumber(initialCertificateNumber ?? "");
 		setIssuedAtInput(isoToDateInput(initialIssuedAtIso));
-	}, [initialCertificateNumber, initialIssuedAtIso, certId]);
+		setExpiresAtInput(isoToDateInput(initialExpiresAtIso));
+		setShowCompletedAt(initialShowCompletedAt);
+		setShowExpiresAt(initialShowExpiresAt);
+	}, [
+		initialCertificateNumber,
+		initialIssuedAtIso,
+		initialExpiresAtIso,
+		initialShowCompletedAt,
+		initialShowExpiresAt,
+		certId,
+	]);
 
 	const certPatchMutation = useMutation({
 		mutationFn: async (body: Record<string, unknown>) => {
@@ -64,6 +83,11 @@ function EnrollmentCertificateMetaFormInner({
 			issuedAt: issuedAtInput
 				? new Date(`${issuedAtInput}T12:00:00.000Z`).toISOString()
 				: null,
+			expiresAt: expiresAtInput
+				? new Date(`${expiresAtInput}T12:00:00.000Z`).toISOString()
+				: null,
+			showCompletedAt,
+			showExpiresAt,
 		});
 	};
 
@@ -94,6 +118,43 @@ function EnrollmentCertificateMetaFormInner({
 					onChange={(ev) => setIssuedAtInput(ev.target.value)}
 				/>
 			</div>
+
+			<div className="form-control w-full">
+				<label className="label py-1">
+					<span className="label-text">Expiry date</span>
+				</label>
+				<input
+					type="date"
+					className="input input-bordered w-full"
+					value={expiresAtInput}
+					disabled={busy}
+					onChange={(ev) => setExpiresAtInput(ev.target.value)}
+				/>
+			</div>
+
+			<fieldset className="space-y-1">
+				<legend className="label-text text-sm mb-1">Show on public verification page</legend>
+				<label className="label cursor-pointer justify-start gap-3 py-1">
+					<input
+						type="checkbox"
+						className="toggle toggle-primary toggle-sm"
+						checked={showCompletedAt}
+						disabled={busy}
+						onChange={(ev) => setShowCompletedAt(ev.target.checked)}
+					/>
+					<span className="label-text">Completion date</span>
+				</label>
+				<label className="label cursor-pointer justify-start gap-3 py-1">
+					<input
+						type="checkbox"
+						className="toggle toggle-primary toggle-sm"
+						checked={showExpiresAt}
+						disabled={busy}
+						onChange={(ev) => setShowExpiresAt(ev.target.checked)}
+					/>
+					<span className="label-text">Expiry date</span>
+				</label>
+			</fieldset>
 
 			<button
 				type="button"

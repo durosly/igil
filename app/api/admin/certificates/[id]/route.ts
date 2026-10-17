@@ -26,6 +26,9 @@ export async function PATCH(
 			"originalFileName",
 			"certificateNumber",
 			"issuedAt",
+			"expiresAt",
+			"showCompletedAt",
+			"showExpiresAt",
 		] as const;
 
 		const $set: Record<string, unknown> = {};
@@ -34,16 +37,23 @@ export async function PATCH(
 		for (const k of allowedKeys) {
 			if (!Object.prototype.hasOwnProperty.call(body, k)) continue;
 			const v = body[k];
-			if (k === "issuedAt") {
+			if (k === "issuedAt" || k === "expiresAt") {
 				if (v === null || v === "") {
-					$unset.issuedAt = 1;
+					$unset[k] = 1;
 				} else {
 					const d = new Date(v);
 					if (Number.isNaN(d.getTime())) {
-						return NextResponse.json({ error: "Invalid issuedAt" }, { status: 400 });
+						return NextResponse.json({ error: `Invalid ${k}` }, { status: 400 });
 					}
-					$set.issuedAt = d;
+					$set[k] = d;
 				}
+				continue;
+			}
+			if (k === "showCompletedAt" || k === "showExpiresAt") {
+				if (typeof v !== "boolean") {
+					return NextResponse.json({ error: `Invalid value for ${k}` }, { status: 400 });
+				}
+				$set[k] = v;
 				continue;
 			}
 			if (v === null || v === "") {
